@@ -1,0 +1,46 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var $block \Magento\Checkout\Block\Cart\Item\Renderer\Actions\Edit */
+?>
+<?php if ($block->isProductVisibleInSiteVisibility()) :?>
+    <a class="action action-edit"
+       <?php /* href="<?= $block->escapeUrl($block->getConfigureUrl()) ?>"*/ ?>
+       href="#"
+       title="<?= $block->escapeHtmlAttr(__('Edit item parameters')) ?>"
+       data-item-id="<?= $block->getItem()->getId() ?>">
+        <span><?= $block->escapeHtml(__('Edit')) ?></span>
+    </a>
+    <script type="text/javascript">
+        require(
+            ['jquery'],
+            function($) {
+                $('a[data-item-id="<?= $block->getItem()->getId() ?>"]').on('click', function(evt) {
+                    $('#form-validate .action.update').click();
+                    evt.preventDefault();
+                    return false;
+                });
+				
+				var touchmoved;
+				
+				$('a[data-item-id="<?= $block->getItem()->getId() ?>"]').on('touchend', function(evt) {
+                    if (touchmoved) {
+						evt.preventDefault();
+						return;
+					}
+					
+					$('#form-validate .action.update').click();
+                    evt.preventDefault();
+                    return false;
+                }).on('touchmove', function(e){
+					touchmoved = true;
+				}).on('touchstart', function(){
+					touchmoved = false;
+				});
+            }
+        );
+    </script>
+<?php endif ?>

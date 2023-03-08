@@ -1,0 +1,18 @@
+<?php
+    $targetUrl = ($block->getCustomReferer()) ? $block->getCustomReferer() : $block->getUrl('/');
+?>
+<div class="page-title-wrapper">
+    <h2 class="page-title">
+        <span class="base" data-ui-id="page-title-wrapper"><?= $block->escapeHtml(__('You are logged in')) ?></span>
+    </h2>
+</div>
+<p><?= $block->escapeHtml(__('You have logged in succesfully. You will be redirected to the page you were browsing in 5 seconds.')) ?></p>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Customer/js/logout-redirect": {
+                "url": "<?= $block->escapeJs($block->escapeUrl($targetUrl)) ?>"
+            }
+        }
+    }
+</script>

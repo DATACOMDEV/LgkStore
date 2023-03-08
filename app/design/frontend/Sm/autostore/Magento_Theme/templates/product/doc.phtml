@@ -1,0 +1,11 @@
+<?php
+    $_dtmHelper = $this->helper('Datacom\LgkStore\Helper\Data');
+    $_product = $block->getProduct();
+    $_productDocUrl = $_dtmHelper->getDocFileUrl($_product->getSku());
+?>
+<?php if ($_productDocUrl): ?>
+    <div class="product attribute sheet">
+        <strong class="type"><?php echo __('Data sheet'); ?></strong>
+        <div class="value"><a href="<?php echo $_productDocUrl; ?>" target="_blank">Download</a></div>
+    </div>
+<?php endif; ?>

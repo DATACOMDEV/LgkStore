@@ -1,0 +1,79 @@
+<?php $dtmCustomerHelper = $this->helper('Datacom\LgkStore\Helper\Customer'); ?>
+<script>
+    require(
+        [
+            'jquery',
+            'domReady!'
+        ],
+        function($) {
+            var targetTaxvatField = $('input#taxvat');
+            var targetCodFiscField = $('input#c_fiscale');
+            var targetSdiPecField = $('input#codice_sdi_pec');
+            var isTaxvatFieldRequired = false;
+            var setTaxvatRequired = function(status) {
+                if (status) {
+                    targetTaxvatField.addClass('required-entry').closest('.field.taxvat').addClass('required');
+                } else {
+                    targetTaxvatField.removeClass('required-entry').closest('.field.taxvat').removeClass('required');
+                }
+            };
+            var validateEmptyValue = function(target) {
+                if (target.val().length == 0) {
+                    target.val('/');
+                }
+            };
+            <?php 
+                if ($dtmCustomerHelper->isCustomerLoggedIn()) {
+                    switch ($dtmCustomerHelper->getLoggedInCustomer()->getGroupId()) {
+                        case \Datacom\LgkStore\Model\Constants::GROUP_ID_AZIENDA_ITALIANA:
+                            ?>
+                            isTaxvatFieldRequired = true;
+                            validateEmptyValue(targetCodFiscField);
+                            <?php
+                            break;
+                        case \Datacom\LgkStore\Model\Constants::GROUP_ID_AZIENDA_ESTERA:
+                            ?>
+                            isTaxvatFieldRequired = true;
+                            validateEmptyValue(targetCodFiscField);
+                            validateEmptyValue(targetSdiPecField);
+                            <?php
+                            break;
+                        case \Datacom\LgkStore\Model\Constants::GROUP_ID_PRIVATO_ITALIA:
+                            ?>
+                            validateEmptyValue(targetSdiPecField);
+                            <?php
+                            break;
+                            case \Datacom\LgkStore\Model\Constants::GROUP_ID_PRIVATO_CEE:
+                                ?>
+                                validateEmptyValue(targetCodFiscField);
+                                validateEmptyValue(targetSdiPecField);
+                                <?php
+                                break;
+                            case \Datacom\LgkStore\Model\Constants::GROUP_ID_PRIVATO_EXTRA_CEE:
+                                ?>
+                                validateEmptyValue(targetCodFiscField);
+                                validateEmptyValue(targetSdiPecField);
+                                <?php
+                                break;
+                        case \Datacom\LgkStore\Model\Constants::GROUP_ID_RIVENDITORE_ITALIA:
+                            ?>
+                            isTaxvatFieldRequired = true;
+                            validateEmptyValue(targetCodFiscField);
+                            <?php
+                            break;
+                        case \Datacom\LgkStore\Model\Constants::GROUP_ID_RIVENDITORE_ESTERO:
+                            ?>
+                            isTaxvatFieldRequired = true;
+                            validateEmptyValue(targetCodFiscField);
+                            validateEmptyValue(targetSdiPecField);
+                            <?php
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            ?>
+            setTaxvatRequired(isTaxvatFieldRequired);
+        }
+    );
+</script>

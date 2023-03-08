@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <move element="checkout.cart.coupon" destination="cart.summary" before="checkout.cart.shipping" />
+        <referenceContainer name="after.body.start">
+            <block class="Datacom\LgkStore\Block\Checkout\Cart\Utilities"  name="lgk.checkout.cart.utilities" template="Datacom_LgkStore::checkout/cart/utilities.phtml" after="-"/>
+        </referenceContainer>
+        <referenceContainer name="checkout.cart.container">
+            <block class="Datacom\LgkStore\Block\Checkout\Cart\ShippingQuote"  name="lgk.checkout.cart.shipping.quote" template="Datacom_LgkStore::checkout/cart/shipping_quote.phtml" after="-"/>
+        </referenceContainer>
+    </body>
+</page>

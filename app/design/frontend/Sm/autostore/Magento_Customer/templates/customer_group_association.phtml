@@ -1,0 +1,98 @@
+<script>
+    require(
+        [
+            'jquery',
+            'domReady!'
+        ],
+        function($) {
+            var customerGroupSelect = $('select#customer_group_custom');
+            var tipoClienteSelect = $('select#tipologia_cliente');
+            var targetTaxvatField = $('input#taxvat');
+            var targetTavatValueField = $('input#partita_iva_obbligatoria');
+            var setInputRequired = function(fieldId, isRequired)  {
+                if (isRequired) {
+                    $('#' + fieldId).closest('div.field').addClass('required');
+                    $('#' + fieldId).addClass('required-entry');
+                } else {
+                    $('#' + fieldId).closest('div.field').removeClass('required');
+                    $('#' + fieldId).removeClass('required-entry');
+                }
+            };
+            var setCustomerGroup = function(tipoClienteIndex, provenienzaClienteIndex) {
+                var newCustomerGroupValue = 0;
+                if (tipoClienteIndex > 0 && provenienzaClienteIndex > 0) {
+                    switch (tipoClienteIndex) {
+                        case 1:     //Azienda
+                            switch (provenienzaClienteIndex) {
+                                case 1:     //Italia
+                                    newCustomerGroupValue = 5741;
+                                    break;
+                                case 2:     //CEE
+                                    newCustomerGroupValue = 5740;
+                                    break;
+                                default:    //Extra cee
+                                newCustomerGroupValue = 5740;
+                                    break;
+                            }
+                            break;
+                        case 2:     //Privato
+                            switch (provenienzaClienteIndex) {
+                                case 1:     //Italia
+                                    newCustomerGroupValue = 5743;
+                                    break;
+                                case 2:     //CEE
+                                    newCustomerGroupValue = 5744;
+                                    break;
+                                default:    //Extra cee
+                                    newCustomerGroupValue = 5766;
+                                    break;
+                            }
+                            break;
+                        default:    //Rivenditore
+                            switch (provenienzaClienteIndex) {
+                                case 1:     //Italia
+                                    newCustomerGroupValue = 5747;
+                                    break;
+                                case 2:     //CEE
+                                    newCustomerGroupValue = 5746;
+                                    break;
+                                default:    //Extra cee
+                                    newCustomerGroupValue = 5746;
+                                    break;
+                            }
+                            break;
+                    }
+                }
+                customerGroupSelect.val(newCustomerGroupValue);
+            };
+
+            $('body').on('change', 'select#tipologia_cliente', function() {
+                var provenienzaClienteTargetIndex;
+                targetTaxvatField.val('');
+                targetTavatValueField.val('');
+                switch ($(this).prop('selectedIndex')) {
+                    case 0:
+                        provenienzaClienteTargetIndex = 0;
+                        break;
+                    case 1:     //Azienda
+                        setInputRequired('azienda', true);
+                        provenienzaClienteTargetIndex = $('select#provenienza_cliente_azienda').prop('selectedIndex');
+                        break;
+                    case 2:     //Privato
+                        setInputRequired('azienda', false);
+                        provenienzaClienteTargetIndex = $('select#provenienza_cliente_privato').prop('selectedIndex');
+                        break;
+                    default:    //Rivenditore
+                        setInputRequired('azienda', false);
+                        provenienzaClienteTargetIndex = $('select#provenienza_cliente_rivenditore').prop('selectedIndex');
+                        break;
+                }
+                setCustomerGroup($(this).prop('selectedIndex'), provenienzaClienteTargetIndex);
+            }).on('change', 'select#provenienza_cliente_azienda, select#provenienza_cliente_privato, select#provenienza_cliente_rivenditore', function() {
+                setCustomerGroup(tipoClienteSelect.prop('selectedIndex'), $(this).prop('selectedIndex'));
+            }).on('keyup', 'input#partita_iva_obbligatoria', function () {
+                targetTaxvatField.val($(this).val());
+            });
+        }
+    );
+</script>

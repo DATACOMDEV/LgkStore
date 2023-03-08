@@ -1,0 +1,16 @@
+<div id="dtm_logged_section" class="logged_section" data-bind="scope: 'section'">
+    <div data-bind="attr: {logged: logged_section().logged}"></div>
+</div>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "section": {
+                        "component": "Datacom_LgkStore/js/section"
+                    }
+                }
+            }
+        }
+    }
+</script>

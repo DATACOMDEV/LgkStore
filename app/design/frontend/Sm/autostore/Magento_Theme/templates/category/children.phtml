@@ -1,0 +1,36 @@
+<?php
+    //Magento\Catalog\Block\Category\View
+    $_currentCategory = $block->getCurrentCategory();
+    $_children = $_currentCategory->getChildrenCategories();
+
+    $_dtmCategoryHelper = $this->helper('Datacom\LgkStore\Helper\Category');
+?>
+<div class="category-grid children-categories">
+    <?php $i = 0; ?>
+    <?php foreach ($_children as $_child): ?>
+        <?php if ($i == 0): ?>
+            <div class="row">
+        <?php endif; ?>
+        <?php $_child = $_dtmCategoryHelper->getCategory($_child->getId()); ?>
+        <?php $_imgUrl = $_child->getImageUrl(); ?>
+        <?php $_imgUrl = empty($_imgUrl) ? '/pub/static/frontend/Sm/autostore/it_IT/images/logo.svg' : $_imgUrl; ?>
+        <div class="col-xs-4 col-sm-4 col-md-4">
+            <div class="category-grid-child">
+                <div class="image-wrapper">
+                    <a href="<?php echo $_child->getUrl(); ?>" title="<?php echo $_child->getName(); ?>"><img src="<?php echo $_imgUrl; ?>" alt="<?php echo $_child->getName(); ?>" title="<?php echo $_child->getName(); ?>"/></a>
+                </div>
+                <div class="name-wrapper">
+                    <a href="<?php echo $_child->getUrl(); ?>" title="<?php echo $_child->getName(); ?>"><span><?php echo $_child->getName(); ?></span></a>
+                </div>
+            </div>
+        </div>
+        <?php $i++; ?>
+        <?php if ($i == 3): ?>
+            </div>
+            <?php $i = 0; ?>
+        <?php endif; ?>
+    <?php endforeach; ?>
+    <?php if ($i != 0): ?>
+        </div>
+    <?php endif; ?>
+</div>

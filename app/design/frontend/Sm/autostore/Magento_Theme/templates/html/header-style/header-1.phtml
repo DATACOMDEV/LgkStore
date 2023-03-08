@@ -1,0 +1,147 @@
+<?php
+$login_customer = $block->getLayout()->createBlock('Magento\Customer\Block\Account\Customer');
+$welcomeMessage = $block->getWelcome();
+?>
+
+<div class="header-container header-style-1">
+    <div class="header-top clearfix">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 action-left">
+                    <div class="top-left-content clearfix">
+                        <?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('header-social')->toHtml(); ?>
+                        <?php echo $block->getChildHtml('language-header'); ?>
+                        <?php echo $block->getChildHtml('currency-header'); ?>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <!-- TrustBox widget - Micro Review Count -->
+                    <div class="trustpilot-widget" data-locale="<?= __('en-GB') ?>" data-template-id="5419b6a8b0d04a076446a9ad" data-businessunit-id="5f75cf42253068000171f832" data-style-height="24px" data-style-width="100%" data-theme="dark">
+                        <a href="https://it.trustpilot.com/review/kartandgo.store" target="_blank" rel="noopener">Trustpilot</a>
+                    </div>
+                    <!-- End TrustBox widget -->
+                </div>
+                <div class="col-lg-3 col-md-3 action-right">
+                    <div class="customer-action">
+                        <?php echo $block->getChildHtml('header.links'); ?>
+                    </div>
+                </div>
+            </div>
+            <div class="row top-website-notice-wrapper">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="top-website-notice">
+                        <?php if ($block->getStoreCode() == 'en'): ?>
+                            <p><strong>ATTENTION:</strong> orders received between august 5th and august 22nd might be shipped on the first week of september.</p>
+                        <?php else: ?>
+                            <p><strong>ATTENZIONE:</strong> gli ordini ricevuti tra il 5 ed il 22 agosto saranno presi in carico ma le spedizioni potrebbero essere rimandate alla prima settimana di settembre.</p>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<style type="text/css">
+    .top-website-notice-wrapper .top-website-notice {
+        text-align: center;
+        background-color: rgb(255, 45, 55);
+        color: #fff;
+        padding: 2px 5px;
+    }
+    .top-website-notice-wrapper .top-website-notice p {
+        margin-bottom: 0;
+    }
+    @media (max-width: 767px) {
+        .top-website-notice-wrapper {
+            clear: both;
+            margin-bottom: 10px;
+        }
+    }
+    @media (min-width: 768px) and (max-width: 1199px) {
+        .header-middle {
+            padding: 60px 0 30px 0;
+        }
+    }
+    @media (min-width: 1200px) {
+        .header-middle {
+            padding: 40px 0 30px 0;
+        }
+    }
+</style>
+    <div class="header-middle">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <?php echo $block->getChildHtml('logo_theme'); ?>
+                </div>
+
+                <div class="col-lg-9">
+                    <div class="middle-right">
+                        <div class="middle-right-container">
+                            <?php //echo $block->getChildHtml('search-header-pro'); ?>
+                            <?php echo $block->getChildHtml('search-header'); ?>
+
+                            <div class="wishlist-header">
+                                <a href="<?php echo $this->getUrl('wishlist') ?>"
+                                   title="<?php echo __('My Wishlist') ?>">
+                                    <span><?php echo __('My Wishlist') ?></span>
+                                </a>
+                            </div>
+
+                            <?php echo $block->getChildHtml('cart-header'); ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-bottom ontop-element">
+        <div class="container">
+            <div class="header-navigation">
+                <div class="desktop-navigation">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="vertical-megamenu">
+                                <?php
+                                
+                                $blockKey = 'top-megamenu-vertical-'.$block->getStoreCode();
+                                $content = $block->getCacheData($blockKey);
+                                if (empty($content)) {
+                                    if ($_config->getGeneral('menu_style') == 'megamenu') {
+                                        $content = $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('vertical-megamenu')->toHtml();
+                                    } else {
+                                        $content = $block->getChildHtml('navigation-header');
+                                    } 
+                                    $block->setCacheData($blockKey, $content);
+                                }
+                                echo $content;
+
+                                ?>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-9">
+                            <?php 
+
+                                $blockKey = 'top-megamenu-horizontal-'.$block->getStoreCode();
+                                $content = $block->getCacheData($blockKey);
+                                if (empty($content)) {
+                                    $content = $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('horizontal-megamenu')->toHtml();
+                                    $block->setCacheData($blockKey, $content);
+                                }
+                                echo $content;
+                            ?>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="navigation-mobile-container">
+                    <?php echo $block->getChildHtml('navigation.mobile'); ?>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+

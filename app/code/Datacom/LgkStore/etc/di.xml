@@ -1,0 +1,32 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+	<type name="Magento\Catalog\Model\Layer\Filter\Item">
+		<plugin name="dtm-lgkstore-custom-module" type="Datacom\LgkStore\Plugin\Catalog\Model\Layer\Filter\Item" sortOrder="1"/>
+	</type>
+	<type name="Magento\Quote\Model\ShippingMethodManagement">
+		<plugin name="dtm-lgkstore-shipping-customization" type="Datacom\LgkStore\Plugin\Quote\Model\ShippingMethodManagement" sortOrder="1"/>
+	</type>
+	<type name="Amasty\XmlSitemap\Helper\Data">
+		<plugin name="dtm-lgkstore-xmlsitemap-helper" type="Datacom\LgkStore\Plugin\Amasty\XmlSitemap\Helper\Data" sortOrder="1"/>
+	</type>
+	<type name="Magento\Framework\Console\CommandList">
+		<arguments>
+			<argument name="commands" xsi:type="array">
+				<item name="populateverticalmegamenu" xsi:type="object">Datacom\LgkStore\Console\Command\PopulateVerticalMegaMenuCommand</item>
+                <item name="populateenglishproductsvalues" xsi:type="object">Datacom\LgkStore\Console\Command\PopulateEnglishProductsValuesCommand</item>
+                <item name="populateenglishcategoriessvalues" xsi:type="object">Datacom\LgkStore\Console\Command\PopulateEnglishCategoriessValuesCommand</item>
+				<item name="populateitaliancategoriessvalues" xsi:type="object">Datacom\LgkStore\Console\Command\PopulateItalianCategoriessValuesCommand</item>
+				<item name="fixgrouppricescommand" xsi:type="object">Datacom\LgkStore\Console\Command\FixGroupPricesCommand</item>
+				<item name="populatecustomerdatacommand" xsi:type="object">Datacom\LgkStore\Console\Command\PopulateCustomerDataCommand</item>
+				<item name="saveproductscommand" xsi:type="object">Datacom\LgkStore\Console\Command\SaveProductsCommand</item>
+				<item name="getproductimagescommand" xsi:type="object">Datacom\LgkStore\Console\Command\GetProductImagesCommand</item>
+				<item name="getproductoptionswithpricecommand" xsi:type="object">Datacom\LgkStore\Console\Command\GetProductOptionsWithPriceCommand</item>
+				<item name="restorecategoriesmetadatacommand" xsi:type="object">Datacom\LgkStore\Console\Command\RestoreCategoriesMetaDataCommand</item>
+				<item name="cvettacommand" xsi:type="object">Datacom\LgkStore\Console\Command\CVettaCommand</item>
+				<item name="populateproductpricescommand" xsi:type="object">Datacom\LgkStore\Console\Command\PopulateProductPricesCommand</item>
+				<item name="getproductremoteattributescommand" xsi:type="object">Datacom\LgkStore\Console\Command\GetProductRemoteAttributesCommand</item>
+				<item name="customcommand" xsi:type="object">Datacom\LgkStore\Console\Command\CustomCommand</item>
+				<item name="syncnewsletteraccountcommand" xsi:type="object">Datacom\LgkStore\Console\Command\SyncNewsletterAccountCommand</item>
+			</argument>
+		</arguments>
+	</type>
+</config>

@@ -1,0 +1,26 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+	<default>
+		<payment>
+			<preventivo>
+				<active>1</active>
+				<model>Datacom\Preventivo\Model\Payment\Preventivo</model>
+				<order_status>pending</order_status>
+				<title>Preventivo</title>
+				<allowspecific>0</allowspecific>
+				<group>offline</group>
+			</preventivo>
+		</payment>
+		<carriers>
+			<preventivo>
+				<model>Datacom\Preventivo\Model\Carrier\Preventivo</model>
+				<active>0</active>
+				<title>Preventivo</title>
+				<name>Preventivo</name>
+				<price>0.00</price>
+				<specificerrmsg>This shipping method is not available. To use this shipping method, please contact us.</specificerrmsg>
+				<sallowspecific>0</sallowspecific>
+			</preventivo>
+		</carriers>
+	</default>
+</config>

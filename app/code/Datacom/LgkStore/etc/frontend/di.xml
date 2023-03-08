@@ -1,0 +1,12 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Customer\Controller\Account\LoginPost">
+        <plugin name="dtm-lgkstore-loginpost-plugin" type="Datacom\LgkStore\Plugin\Customer\Controller\Account\LoginPost" sortOrder="1" />
+    </type>
+    <type name="Magento\Customer\CustomerData\SectionPoolInterface">
+        <arguments>
+            <argument name="sectionSourceMap" xsi:type="array">
+                <item name="logged_section" xsi:type="string">Datacom\LgkStore\CustomerData\LoggedSection</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

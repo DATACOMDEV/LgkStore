@@ -1,0 +1,7 @@
+<?php
+    $dtmUrlHelper = $this->helper('Datacom\LgkStore\Helper\Url');
+    $categoryLanguageUrl = $dtmUrlHelper->getProductUrl();
+?>
+<?php foreach ($categoryLanguageUrl as $code => $url): ?>
+    <link rel="alternate" href="<?= $url ?>" hreflang="<?= $code ?>"/>
+<?php endforeach; ?>

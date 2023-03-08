@@ -1,0 +1,31 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<?php
+/**
+ * Shopping cart template
+ *
+ * @var $block \Magento\Checkout\Block\Cart
+ */
+
+if ($block->getItemsCount()) {
+    // phpcs:ignore Magento2.Security.LanguageConstruct.DirectOutput
+    echo $block->getChildHtml('with-items');
+    ?>
+    <div class="checkout-additional-button">
+        <ul class="checkout methods items checkout-methods-items">
+            <li class="item">
+                <button type="button" data-role="proceed-to-checkout" title="<?= __('Proceed to Checkout') ?>" class="action primary checkout" onclick="jQuery('.cart-summary button.action.primary.checkout').click()">
+                    <span><?= __('Proceed to Checkout') ?></span>
+                </button>
+            </li>
+        </ul>
+    </div>
+    <?php    
+} else {
+    // phpcs:ignore Magento2.Security.LanguageConstruct.DirectOutput
+    echo $block->getChildHtml('no-items');
+}

@@ -1,0 +1,201 @@
+<?php
+    $dtmHelper = $this->helper('Datacom\LgkStore\Helper\Data');
+?>
+
+
+<!-- INIZIO: BLOCCO BANNER FERIE DA RIMUOVERE O COMMENTARE -->
+<div class="cart-bar-info must-not-show"><div><span><?= __('Orders placed between <strong>August 6th</strong> and <strong>17th</strong> included will be shipped starting from <strong>August 19th</strong>.') ?></span></div></div>
+<style type="text/css">
+    .must-not-show {
+        display: none !important;
+    }
+    .cart-bar-info {
+        width: 100%;
+        text-align: center;
+        color: rgb(255, 45, 55);
+        padding: 5px 10px;
+        border: 1px solid rgb(255, 45, 55);
+        margin-bottom: 10px;
+    }
+    @media (max-width: 991px) {
+        #form-validate .cart-bar-info {
+            display: none !important;
+        }
+    }
+    @media (min-width: 992px) {
+        .column.main > .cart-bar-info {
+            display: none !important;
+        }
+    }
+</style>
+<script>
+    require(
+        ['jquery'],
+        function($) {
+            var targetItem = $('.cart-bar-info');
+            $('.cart.table-wrapper.detailed').before(targetItem);
+            targetItem.removeClass('must-not-show');
+            var mobileItem = $('.cart-bar-info').clone();
+            mobileItem.removeClass('must-not-show');
+            $('.column.main > .cart-container').before(mobileItem);
+        }
+    );
+</script>
+<!-- FINE: BLOCCO BANNER FERIE DA RIMUOVERE O COMMENTARE -->
+
+
+
+<?php /*if ($block->isLoggedIn() || $block->getQuoteMaskId()): ?>
+    <script type="text/javascript">
+        require(
+            [
+                'jquery',
+                'mage/storage',
+                'Magento_Checkout/js/model/error-processor'
+            ],
+            function($, storage, errorProcessor) {
+                var todo = function() {
+                    if ($('#estimator').length == 0) {
+                        setTimeout(function() {
+                            todo();
+                        }, 50);
+                        return;
+                    }
+
+                    $('#estimator').on('click touchstart', function(e) {
+                        $('#shipping-quote-content').addClass('loading');
+                        var address;
+                        <?php if ($block->isLoggedIn()): ?>
+                            var serviceUrl = 'rest/<?= $block->getStore()->getCode() ?>/V1/carts/mine/estimate-shipping-methods';
+                            <?php $customerGroupId = $block->getCustomerGroupId(); ?>
+                            <?php if (in_array($customerGroupId, [8, 4, 9, 11])): ?>
+                                var validCountryIds = ['IT'];
+
+                                if (validCountryIds.length != 0) {
+                                    $('#country-select option').filter(function(index) {
+                                        return validCountryIds.indexOf($(this).attr('value')) == -1;
+                                    }).remove();
+                                }
+                            <?php elseif (in_array($customerGroupId, [7, 10])): ?>
+                                var validCountryIds = ['<?= implode('\', \'', $dtmHelper->getCeeCountryIds()) ?>'];
+
+                                if (validCountryIds.length != 0) {
+                                    $('#country-select option').filter(function(index) {
+                                        return validCountryIds.indexOf($(this).attr('value')) == -1;
+                                    }).remove();
+                                }
+                            <?php elseif (in_array($customerGroupId, [6, 5, 12])): ?>
+                                var validCountryIds = ['<?= implode('\', \'', $dtmHelper->getCeeCountryIds()) ?>'];
+
+                                if (validCountryIds.length != 0) {
+                                    $('#country-select option').filter(function(index) {
+                                        return validCountryIds.indexOf($(this).attr('value')) != -1;
+                                    }).remove();
+                                }
+                            <?php endif; ?>
+                        <?php else: ?>
+                            var serviceUrl = 'rest/<?= $block->getStore()->getCode() ?>/V1/guest-carts/<?= $block->getQuoteMaskId() ?>/estimate-shipping-methods';
+                        <?php endif; ?>
+
+                        var payload = JSON.stringify(
+                            {
+                                address: {
+                                    'country_id': $('#country-select').val(),
+                                    'postcode': null,
+                                }
+                            }
+                        );
+
+                        storage.post(
+                            serviceUrl, payload, false
+                        ).done(
+                            function (result) {
+                                $('#quote-items tbody tr:not([data-template])').remove();
+                                var ritiroInNegozioIndex = -1;
+                                var handleNewItem = function(item) {
+                                    var newItem = $('#quote-items tbody tr[data-template]').clone();
+                                    if (item.amount == 0) {
+                                        if (item.carrier_code == 'preventivo') {
+                                            var amountToShow = '<?= __('Quotation after order') ?>';
+                                        } else {
+                                            var amountToShow = '<?= __('Free') ?>';
+                                        }
+                                    } else {
+                                        var amountToShow = item.amount.toFixed(2) + '';
+                                        amountToShow = amountToShow.replace(/\./g, ',');
+
+                                        amountToShow = '€ ' + amountToShow;
+                                    }
+                                    var carrierToShow = item.carrier_title;
+                                    if (item.carrier_code != 'customshipping') {
+                                        carrierToShow = '<?= __('Courier') ?>';
+                                        if ($('#country-select').val() != 'IT') {
+                                            carrierToShow = '<?= __('Int. courier') ?>';
+                                        }
+                                    }
+                                    newItem.removeAttr('data-template');
+                                    newItem.html(newItem.html().replace(/#AMOUNT#/g, amountToShow));
+                                    newItem.html(newItem.html().replace(/#TITOLO#/g, carrierToShow));
+                                    //newItem.html(newItem.html().replace(/#DESCRIZIONE#/g, item.method_title));
+                                    $('#quote-items tbody').append(newItem);
+                                    console.log(item);
+                                };
+                                var hasFreeShipping = false;
+                                $.each(result, function(index) {
+                                    if (!this.available) return;
+                                    if (this.carrier_code != 'freeshipping') return;
+                                    hasFreeShipping = true;
+                                });
+                                $.each(result, function(index) {
+                                    if (!this.available) return;
+                                    if (hasFreeShipping && this.carrier_code == 'matrixrate') return;
+                                    if (this.carrier_code == 'customshipping') {
+                                        if ($('#country-select').val() == 'IT') {
+                                            ritiroInNegozioIndex = index;
+                                        }
+                                        return;
+                                    }
+                                    handleNewItem(this);
+                                });
+                                if (ritiroInNegozioIndex != -1) {
+                                    handleNewItem(result[ritiroInNegozioIndex]);
+                                }
+                                $('#shipping-quote-content').removeClass('loading');
+                            }
+                        ).fail(
+                            function (response) {
+                                errorProcessor.process(response);
+                                $('#shipping-quote-content').removeClass('loading');
+                            }
+                        );
+
+                        e.preventDefault();
+                        return false;
+                    });
+
+                    var todoOnresize = function() {
+                        var width = $(window).width();
+
+                        if (width < 992) {
+                            if ($('#shipping-quote-wrapper #shipping-quote-content').length == 0) return;
+                            $('.cart-container > .cart-summary').after($('#shipping-quote-content'));
+                        } else {
+                            if ($('#shipping-quote-wrapper #shipping-quote-content').length == 1) return;
+                            $('#shipping-quote-wrapper').append($('#shipping-quote-content'));
+                        }
+                    };
+
+                    $(window).on('resize', function() {
+                        todoOnresize();
+                    });
+
+                    todoOnresize();
+
+                    $('#estimator').click();
+                };
+
+                todo();
+            }
+        );
+    </script>
+<?php endif;*/ ?>

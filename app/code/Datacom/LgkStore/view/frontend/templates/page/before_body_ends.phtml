@@ -1,0 +1,61 @@
+<script type="text/javascript">
+    require(
+        [
+            'jquery'
+        ],
+        function($) {
+            if ($('.header > li').length != 5) return;
+
+            var todo = function() {
+                var viewEn = $('#switcher-language-trigger-nav > .view-en');
+                var viewIt = $('#switcher-language-trigger-nav > .view-it');
+
+                if (viewEn.length == 0 && viewIt.length == 0) {
+                    setTimeout(function() {
+                        todo();
+                    }, 50);
+                }
+
+                if (viewEn.length == 1) {
+                    //Da inglese a italiano
+                    $('#switcher-language-nav .view-it.switcher-option').on('click touchstart', function(e) {
+                        window.location.href = '//www.kartandgo.store';
+                        e.preventDefault();
+                        return false;
+                    });
+                } else {
+                    //Da italiano a inglese
+                    $('#switcher-language-nav .view-en.switcher-option').on('click touchstart', function(e) {
+                        window.location.href = '//www.kartandgo.store/en';
+                        e.preventDefault();
+                        return false;
+                    });
+                }
+            };
+        }
+    );
+</script>
+
+<!-- TIDIO -->
+<script src="//code.tidio.co/thghzdgdwcqpjxmbryagpmmqwvqze6c6.js" async></script>
+
+<!-- INIZIO: BLOCCO BANNER FERIE DA RIMUOVERE O COMMENTARE -->
+<!-- <div id="top-bar-info"><div><span><?= __('Orders placed between <strong>August 6th</strong> and <strong>17th</strong> included will be shipped starting from <strong>August 19th</strong>.') ?></span></div></div>
+<style type="text/css">
+    #top-bar-info {
+        width: 100%;
+        text-align: center;
+        background-color: rgb(59, 180, 74);
+        color: #fff;
+        padding: 5px 10px;
+    }
+</style>
+<script>
+    require(
+        ['jquery'],
+        function($) {
+            $('#notice-cookie-block').before($('#top-bar-info'));
+        }
+    );
+</script> -->
+<!-- FINE: BLOCCO BANNER FERIE DA RIMUOVERE O COMMENTARE -->

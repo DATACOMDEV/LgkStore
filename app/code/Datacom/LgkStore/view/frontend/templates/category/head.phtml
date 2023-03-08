@@ -1,0 +1,75 @@
+<?php
+    $dtmUrlHelper = $this->helper('Datacom\LgkStore\Helper\Url');
+    $categoryLanguageUrl = $dtmUrlHelper->getCategoryUrl();
+?>
+<?php foreach ($categoryLanguageUrl as $code => $url): ?>
+    <link rel="alternate" href="<?= $url ?>" hreflang="<?= $code ?>"/>
+<?php endforeach; ?>
+<script type="text/javascript">
+    require(
+        [
+            'jquery'
+        ], 
+        function($) {
+            var firstCheck = function() {
+                var targetSidebar = $('body.catalog-category-view .col-sidebar');
+
+                if (targetSidebar.length == 0) {
+                    setTimeout(() => {
+                        firstCheck(); 
+                    }, 50);
+                    return;
+                }
+
+                targetSidebar.after('<div id="category-filter-button"><span><span class="fa fa-gears fa-3x"></span></span></div>');
+                targetSidebar.before('<div id="category-filter-background" style="display: none;"></div>');
+
+                var targetCategoryFilter = $('#category-filter-background');
+                var targetCategoryFilterButton = $('#category-filter-button');
+
+                var check = function(item, e) {
+                    var curStatus = targetSidebar.attr('data-status');
+
+                    if (curStatus == 'active') {
+                        targetSidebar.removeAttr('data-status');
+                        item.find('.fa').attr('class', 'fa fa-gears fa-3x');
+                        targetSidebar.animate({left: '100%'}, 250);
+                        targetCategoryFilter.hide();
+                    } else {
+                        targetSidebar.attr('data-status', 'active');
+                        item.find('.fa').attr('class', 'fa fa-close fa-3x');
+                        targetSidebar.animate({left: '20%'}, 250);
+                        targetCategoryFilter.show();
+                    }
+
+                    e.preventDefault();
+                };
+
+                targetCategoryFilterButton.on('click.lgkfilters touchstart.lgkfilters', function(e) {
+                    if (e.type == 'click') {
+                        $(this).off('touchstart.lgkfilters');
+                    } else if (e.type == 'touchstart') {
+                        $(this).off('click.lgkfilters');
+                    }
+
+                    check($(this), e);
+                });
+
+                targetCategoryFilter.on('click.lgkfilters touchstart.lgkfilters', function(e) {
+                    if (e.type == 'click') {
+                        $(this).off('touchstart.lgkfilters');
+                    } else if (e.type == 'touchstart') {
+                        $(this).off('click.lgkfilters');
+                    }
+
+                    check(targetCategoryFilterButton, e);
+
+                    e.preventDefault();
+                });
+            };
+            
+            
+            firstCheck();
+        }
+    );
+</script>

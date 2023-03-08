@@ -1,0 +1,173 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var $block \Magento\Checkout\Block\Onepage */
+
+$_dtmCustomerHelper = $this->helper(\Datacom\LgkStore\Helper\Customer::class);
+$_dtmDataHelper = $this->helper(\Datacom\LgkStore\Helper\Data::class);
+
+?>
+<div id="checkout" data-bind="scope:'checkout'" class="checkout-container">
+    <div id="checkout-loader" data-role="checkout-loader" class="loading-mask" data-mage-init='{"checkoutLoader": {}}'>
+        <div class="loader">
+            <img src="<?= $block->escapeUrl($block->getViewFileUrl('images/loader-1.gif')) ?>"
+                 alt="<?= $block->escapeHtmlAttr(__('Loading...')) ?>"
+                 style="position: absolute;">
+        </div>
+    </div>
+    <!-- ko template: getTemplate() --><!-- /ko -->
+    <script type="text/x-magento-init">
+        {
+            "#checkout": {
+                "Magento_Ui/js/core/app": <?= /* @noEscape */ $block->getJsLayout() ?>
+            }
+        }
+    </script>
+    <script>
+        window.checkoutConfig = <?= /* @noEscape */ $block->getSerializedCheckoutConfig() ?>;
+        // Create aliases for customer.js model from customer module
+        window.isCustomerLoggedIn = window.checkoutConfig.isCustomerLoggedIn;
+        window.customerData = window.checkoutConfig.customerData;
+    </script>
+    <script>
+        require([
+            'mage/url',
+            'Magento_Ui/js/block-loader'
+        ], function(url, blockLoader) {
+            blockLoader("<?= $block->escapeJs($block->escapeUrl($block->getViewFileUrl('images/loader-1.gif'))) ?>");
+            return url.setBaseUrl('<?= $block->escapeJs($block->escapeUrl($block->getBaseUrl())) ?>');
+        })
+
+        require(
+            [
+                'jquery',
+                '!domReady'
+            ],
+            function($) {
+                var ceeAllowedCountries = <?= json_encode($_dtmDataHelper->getCeeCountryIds()); ?>;
+
+                var populatePrecompiledData = function(item) {
+                    var lgkCheckoutSettings = {
+                        isPivaRequired: <?= $_dtmCustomerHelper->isCustomerNeedPiva($_dtmCustomerHelper->getLoggedInCustomer()) ? 'true' : 'false'; ?>,
+                        isCfiscRequired: <?= $_dtmCustomerHelper->isCustomerNeedCfisc($_dtmCustomerHelper->getLoggedInCustomer()) ? 'true' : 'false'; ?>,
+                        cFiscDefaultValue: '<?= $_dtmCustomerHelper->getLoggedInCustomer()->getData('c_fiscale'); ?>',
+                        pIvaDefaultValue: '<?= $_dtmCustomerHelper->getLoggedInCustomer()->getData('partita_iva_obbligatoria'); ?>',
+                        telephoneDefaultValue: '<?= $_dtmCustomerHelper->getLoggedInCustomer()->getData('telefono'); ?>',
+                        adressesCount: <?= count($_dtmCustomerHelper->getLoggedInCustomer()->getAddresses()); ?>,
+                        companyDefaultValue: '<?= $_dtmCustomerHelper->getLoggedInCustomer()->getData('azienda'); ?>'
+                    };
+
+                    var e = jQuery.Event( 'keydown', { which: $.ui.keyCode.ENTER } );
+                    
+                    var target = $(item);
+                    var pivaField = target.find('[name="vat_id"]');
+                    var cfiscField = target.find('[name="custom_attributes[c_fiscale]"]');
+                    var phoneField = target.find('[name="telephone"]');
+                    var companyField = target.find('[name="company"]');
+                    var countryField = target.find('select[name="country_id"]');
+
+                    var newPivaValue = '';
+                    var newCfiscValue = '/';
+
+                    if (pivaField.length == 0 || cfiscField.length == 0 || phoneField.length == 0) {
+                        return false;
+                    }
+
+                    if (lgkCheckoutSettings.isPivaRequired) {
+                        newPivaValue = lgkCheckoutSettings.pIvaDefaultValue;
+                        target.find('[name="shippingAddress.vat_id"]').show();
+                    } else {
+                        target.find('[name="shippingAddress.vat_id"]').hide();
+                    }
+
+                    if (lgkCheckoutSettings.isCfiscRequired) {
+                        newCfiscValue = lgkCheckoutSettings.cFiscDefaultValue;
+                        target.find('[name="shippingAddress.custom_attributes.c_fiscale"]').show();
+                    } else {
+                        target.find('[name="shippingAddress.custom_attributes.c_fiscale"]').hide();
+                    }
+
+                    if (!pivaField.val()) {
+                        pivaField.attr('value', newPivaValue);
+                        pivaField.trigger('keyup');
+                    }
+                    
+                    if (!cfiscField.val()) {
+                        cfiscField.attr('value', newCfiscValue);
+                        cfiscField.trigger('keyup');
+                    }
+
+                    if (!phoneField.val()) {
+                        phoneField.attr('value', lgkCheckoutSettings.telephoneDefaultValue);
+                        phoneField.trigger('keyup');
+                    }
+
+                    if (!companyField.val()) {
+                        companyField.attr('value', lgkCheckoutSettings.companyDefaultValue);
+                        companyField.trigger('keyup');
+                    }
+
+                    <?php
+                        if ($_dtmCustomerHelper->getLoggedInCustomer()->getData('provenienza_cliente_rivenditore') == 5763 ||
+                            $_dtmCustomerHelper->getLoggedInCustomer()->getData('provenienza_cliente_privato') == 5757 ||
+                            $_dtmCustomerHelper->getLoggedInCustomer()->getData('provenienza_cliente_azienda') == 5760) {
+                                //Italia
+                                ?>
+                                countryField.find('option:not([value="IT"])').remove();
+                                <?php
+                        } else if ($_dtmCustomerHelper->getLoggedInCustomer()->getData('provenienza_cliente_rivenditore') == 5764 ||
+                            $_dtmCustomerHelper->getLoggedInCustomer()->getData('provenienza_cliente_privato') == 5758 ||
+                            $_dtmCustomerHelper->getLoggedInCustomer()->getData('provenienza_cliente_azienda') == 5761) {
+                                //CEE
+                                ?>
+                                    countryField.find('option:not([value=""])').filter(function(index) {
+                                        return $.inArray($(this).attr('value'), ceeAllowedCountries) == -1;
+                                    }).remove();
+                                <?php
+
+                        } else if ($_dtmCustomerHelper->getLoggedInCustomer()->getData('provenienza_cliente_rivenditore') == 5765 ||
+                            $_dtmCustomerHelper->getLoggedInCustomer()->getData('provenienza_cliente_privato') == 5759 ||
+                            $_dtmCustomerHelper->getLoggedInCustomer()->getData('provenienza_cliente_azienda') == 5762) {
+                                //Extra CEE
+                                ?>
+                                    countryField.find('option:not([value=""])').filter(function(index) {
+                                        return $.inArray($(this).attr('value'), ceeAllowedCountries) != -1;
+                                    }).remove();
+                                <?php
+
+                        }
+                    ?>
+
+                    countryField.trigger('change');
+
+                    return true;
+                };
+
+                var done = false;
+
+                $(document).on('DOMSubtreeModified', '#co-shipping-form #shipping-new-address-form', function() {
+                    if (done) {
+                        return;
+                    }
+
+                    var item = this;
+
+                    var startPopulateData = function() {
+                        if (populatePrecompiledData(item)) {
+                            done = true;
+                        } else {
+                            setTimeout(function() {
+                                startPopulateData();
+                            }, 500);
+                        }
+                    };
+
+                    startPopulateData();
+                });
+            }
+        );
+    </script>
+</div>

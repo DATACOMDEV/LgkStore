@@ -34,7 +34,9 @@
                     <?php $wrapOptions = true;
                 endif; ?>
                     <?php if ($filter->getItemsCount()) : ?>
-                        <dt data-request-var="<?php echo $filter->getRequestVar(); ?>" role="heading" aria-level="3" class="filter-options-title"><?= $block->escapeHtml(__($filter->getName())) ?></dt>
+                        <?php $filterLabel = $filter->getName(); ?>
+                        <?php if ($filter->getRequestVar() == 'cat') $filterLabel = 'Categories'; ?>
+                        <dt data-request-var="<?php echo $filter->getRequestVar(); ?>" role="heading" aria-level="3" class="filter-options-title"><?= $block->escapeHtml(__($filterLabel)) ?></dt>
                         <dd data-request-var="<?php echo $filter->getRequestVar(); ?>" class="filter-options-content"><?= /* @noEscape */ $block->getChildBlock('renderer')->render($filter) ?></dd>
                     <?php endif; ?>
             <?php endforeach; ?>

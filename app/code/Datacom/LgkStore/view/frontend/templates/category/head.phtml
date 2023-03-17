@@ -66,6 +66,23 @@
 
                     e.preventDefault();
                 });
+
+                var sidebarCompareTarget = targetSidebar.find('.block.block-compare[data-role="compare-products-sidebar"]');
+
+                sidebarCompareTarget.on('DOMSubtreeModified', function(){
+                    if ($(this).find('.empty').length > 0) {
+                        $(this).removeClass('ready');
+                        return;
+                    }
+
+                    $(this).addClass('ready');
+                });
+
+                targetSidebar.find('.sidebar.sidebar-main').prepend(sidebarCompareTarget);
+
+                var targetFilters = targetSidebar.find('#narrow-by-list');
+                targetFilters.append(targetFilters.find('dt[data-request-var="cat"]'));
+                targetFilters.append(targetFilters.find('dd[data-request-var="cat"]'));
             };
             
             

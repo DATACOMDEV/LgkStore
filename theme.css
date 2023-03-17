@@ -35,7 +35,10 @@ body.checkout-index-index .payment-option.discount-code,
 #checkout-shipping-method-load tbody .col.col-method:not(:first-child),
 #quote-items tbody tr[data-template],
 body.catalog-product_compare-index .action.print,
-body.catalog-product_compare-index .table-comparison tr th {
+body.catalog-product_compare-index .table-comparison tr th,
+.block.block-compare[data-role="compare-products-sidebar"]:not(.ready),
+dd[data-request-var="cat"] ~ dt,
+dd[data-request-var="cat"] ~ dd {
     display: none !important;
 }
 body.checkout-index-index .header-bottom.ontop-element {
@@ -458,6 +461,10 @@ html[lang="en"] .table-checkout-shipping-method > tbody > tr[data-carrier-code="
 }
 .products-grid .action.tocart.primary {
 	padding: 0 !important;
+}
+.sidebar .block.filter .filter-options dt[data-request-var="cat"].filter-options-title {
+	color: rgb(255, 45, 55);
+	font-size: 133.33%;
 }
 @media (max-width: 216px) {
 	.trustpilot-widget[data-template-id="5419b6a8b0d04a076446a9ad"] > iframe {

@@ -123,8 +123,9 @@ $_dtmHelper            = $this->helper('Datacom\LgkStore\Helper\Data');
                                $_productName ?>"
                                alt="<?= /* @escapeNotVerified */
                                $_productName ?>">
-                                <?= /* @escapeNotVerified */
-                                $_dtmHelper->getTextLinkTruncated($_productName, 76) ?>
+                                <span class="full-name"><?= /* @escapeNotVerified */
+                                $_dtmHelper->getTextLinkTruncated($_productName, 76) ?></span>
+                                <span class="mobile-name"><?= $_dtmHelper->getTextLinkTruncated($_productName, 24) ?></span>
                             </a>
                         </strong>
                         <?= $block->getReviewsSummaryHtml($_product, $templateType) ?>

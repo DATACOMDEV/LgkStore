@@ -33,7 +33,9 @@ body.catalog-product-view.logged-user:not(.customer-group-4):not(.customer-group
 body.checkout-index-index .payment-option.discount-code,
 #checkout-shipping-method-load thead .col.col-method:not(:first-child),
 #checkout-shipping-method-load tbody .col.col-method:not(:first-child),
-#quote-items tbody tr[data-template] {
+#quote-items tbody tr[data-template],
+body.catalog-product_compare-index .action.print,
+body.catalog-product_compare-index .table-comparison tr th {
     display: none !important;
 }
 body.checkout-index-index .header-bottom.ontop-element {
@@ -218,9 +220,6 @@ body.catalog-product-view .product-info-main .price-box {
 	white-space: inherit;
 	text-transform: none;
 	font-size: 100%;
-}
-.product-item-info .product.actions.product-item-actions .actions-primary button {
-	padding: 0 !important;
 }
 .top-category-navigation {
 	text-align: center;
@@ -457,6 +456,9 @@ html[lang="en"] .table-checkout-shipping-method > tbody > tr[data-carrier-code="
 .products.list .product-item .price-box.price-final_price .special-price + .old-price .price-wrapper .price {
 	line-height: 23px;
 }
+.products-grid .action.tocart.primary {
+	padding: 0 !important;
+}
 @media (max-width: 216px) {
 	.trustpilot-widget[data-template-id="5419b6a8b0d04a076446a9ad"] > iframe {
 		height: 58px !important;
@@ -478,6 +480,17 @@ html[lang="en"] .table-checkout-shipping-method > tbody > tr[data-carrier-code="
 		height: auto;
 	}
 }
+@media (min-width: 300px) and (max-width: 480px) {
+	.col1-layout .products.wrapper.products-grid .item.product-item {
+		width: 50%;
+	}
+	.col1-layout .products.wrapper.products-grid .item.product-item:nth-child(2n) {
+		clear: right;
+	}
+	.col1-layout .products.wrapper.products-grid .item.product-item:nth-child(2n+1) {
+		clear: left;
+	}
+}
 @media (max-width: 480px) {
 	.trustpilot-widget[data-template-id="5419b6a8b0d04a076446a9ad"] {
 		padding: 0;
@@ -485,6 +498,66 @@ html[lang="en"] .table-checkout-shipping-method > tbody > tr[data-carrier-code="
 		margin-bottom: 15px;
 		float: none;
 		vertical-align: top;
+	}
+	.header-top .customer-action > .header.links > li > a {
+		line-height: 23px;
+	}
+	.header-top .customer-action > .header.links::before {
+		margin-top: 5px;
+	}
+	.header-top .trustpilot-widget {
+		margin-bottom: 5px;
+	}
+	.header-top .language-wrapper #switcher-language-trigger-nav > strong,
+	.header-top .language-wrapper #switcher-language-trigger-nav > strong > span {
+		line-height: 35px;
+	}
+	.logo-wrapper .logo-content a.logo > img {
+		width: 129px;
+		margin-bottom: 15px;
+	}
+	.page-wrapper .header-middle {
+		padding-top: 15px;
+	}
+	.product-item-actions > .actions-secondary,
+	.product-item-link .full-name {
+		display: none !important;
+	}
+	.products-grid .product-item-info .product-item-details .product-item-name {
+		height: 43.16px;
+	}
+	.col1-layout .products.wrapper.products-grid .item.product-item .price-box .price-including-tax[data-price-type="finalPrice"] .price {
+		font-size: 100%;
+	}
+	.products.wrapper.products-grid .item.product-item .price-box .special-price {
+		margin-right: 0;
+		display: block;
+	}
+	.products.wrapper.products-grid .item.product-item .price-box .special-price + .old-price {
+		display: block;
+	}
+	.products-grid .product-item-info .product-item-details {
+		top: 44px;
+		border-color: #fff;
+	}
+	.products-grid .product-item-info .product-item-details .product-item-inner {
+		opacity: 1;
+		visibility: visible;
+	}
+	.products-grid .product-item-info .product-item-details .product-item-inner .product-item-actions {
+		padding: 0;
+	}
+	.deal-block .product-item-info .product-item-inner .actions-primary {
+		float: none;
+		display: block;
+	}
+	.deal-block .product-item-info .product-item-inner .actions-primary .action.tocart.primary {
+		width: 100%;
+	}
+}
+@media (min-width: 481px) {
+	.product-item-link .mobile-name {
+		display: none !important;
 	}
 }
 @media (max-width: 575px) {
@@ -549,6 +622,19 @@ html[lang="en"] .table-checkout-shipping-method > tbody > tr[data-carrier-code="
 	.category-grid.children-categories > .row {
 		margin-bottom: 15px;
 	}
+	#cvetta-form-search > [data-role="minisearch-label"] {
+		height: 0;
+	}
+	#cvetta-form-search > [data-role="minisearch-label"] + .control {
+		padding-right: 20px;
+	}
+	.page-wrapper .header-middle .middle-right {
+		left: 15px;
+		right: 25px;
+	}
+	.home-page-1 > .slidershow + .container {
+		display: none !important;
+	}
 }
 @media (min-width: 768px) {
 	footer .footer-bottom .copyright-footer {
@@ -578,6 +664,21 @@ html[lang="en"] .table-checkout-shipping-method > tbody > tr[data-carrier-code="
 		min-width: 300px;
 		width: 51%;
 	}
+    .header-top.clearfix .row > div:nth-child(2) {
+        position: absolute;
+        top: 30px;
+        background-color: #282828;
+        left: 0;
+        text-align: center;
+    }
+    .header-top.clearfix .row > div:nth-child(2) > .trustpilot-widget {
+        width: 100%;
+		padding-top: 4px;
+		padding-bottom: 4px;
+   }
+   .page-wrapper .header-middle {
+	padding-top: 40px;
+   }
 }
 @media (min-width: 481px) and (max-width: 991px) {
     .products-grid .product-item-info .product-item-details .product-item-name {
@@ -603,6 +704,18 @@ html[lang="en"] .table-checkout-shipping-method > tbody > tr[data-carrier-code="
 		content: "Create Account";
 		color: rgb(204, 204, 204);
 		font-size: 11px;
+	}
+	.page-wrapper .header-middle {
+		padding-top: 15px;
+		padding-bottom: 15px;
+	}
+	.logo-wrapper .logo-content a.logo > img {
+		margin-bottom: 0;
+	}
+}
+@media (min-width: 768px) and (max-width: 1199px) {
+	.product-item-info .product.actions.product-item-actions .actions-primary button {
+		padding: 0 15px !important;
 	}
 }
 @media (max-width: 991px) {
@@ -699,6 +812,9 @@ html[lang="en"] .table-checkout-shipping-method > tbody > tr[data-carrier-code="
 	}
 	.lgk-menuitem-highlighted-parent .sm_megamenu_title {
 		color: #fff;
+	}
+	.deal-container .banner-image {
+		text-align: center;
 	}
 }
 @media (min-width: 992px) {

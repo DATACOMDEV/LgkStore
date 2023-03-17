@@ -21,7 +21,7 @@
                     return;
                 }
 
-                targetSidebar.after('<div id="category-filter-button"><span><span class="fa fa-gears fa-3x"></span></span></div>');
+                targetSidebar.after('<div id="category-filter-button"><span><span class="fa fa-filter fa-3x"></span></span></div>');
                 targetSidebar.before('<div id="category-filter-background" style="display: none;"></div>');
 
                 var targetCategoryFilter = $('#category-filter-background');
@@ -32,7 +32,7 @@
 
                     if (curStatus == 'active') {
                         targetSidebar.removeAttr('data-status');
-                        item.find('.fa').attr('class', 'fa fa-gears fa-3x');
+                        item.find('.fa').attr('class', 'fa fa-filter fa-3x');
                         targetSidebar.animate({left: '100%'}, 250);
                         targetCategoryFilter.hide();
                     } else {

@@ -26,6 +26,8 @@
 				<item name="getproductremoteattributescommand" xsi:type="object">Datacom\LgkStore\Console\Command\GetProductRemoteAttributesCommand</item>
 				<item name="customcommand" xsi:type="object">Datacom\LgkStore\Console\Command\CustomCommand</item>
 				<item name="syncnewsletteraccountcommand" xsi:type="object">Datacom\LgkStore\Console\Command\SyncNewsletterAccountCommand</item>
+				<item name="generatecustomerpricepercategorycommand" xsi:type="object">Datacom\LgkStore\Console\Command\GenerateCustomerPricePerCategoryCommand</item>
+				<item name="populatefrenchurlkeycommand" xsi:type="object">Datacom\LgkStore\Console\Command\PopulateFrenchUrlKeyCommand</item>
 			</argument>
 		</arguments>
 	</type>

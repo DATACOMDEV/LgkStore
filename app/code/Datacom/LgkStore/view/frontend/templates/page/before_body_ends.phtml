@@ -9,8 +9,9 @@
             var todo = function() {
                 var viewEn = $('#switcher-language-trigger-nav > .view-en');
                 var viewIt = $('#switcher-language-trigger-nav > .view-it');
+                var viewFr = $('#switcher-language-trigger-nav > .view-fr');
 
-                if (viewEn.length == 0 && viewIt.length == 0) {
+                if (viewEn.length == 0 && viewIt.length == 0 && viewFr.length == 0) {
                     setTimeout(function() {
                         todo();
                     }, 50);
@@ -23,13 +24,51 @@
                         e.preventDefault();
                         return false;
                     });
-                } else {
+
+                    //Da inglese a francese
+                    $('#switcher-language-nav .view-fr.switcher-option').on('click touchstart', function(e) {
+                        window.location.href = '//www.kartandgo.store/fr';
+                        e.preventDefault();
+                        return false;
+                    });
+
+                    return;
+                } 
+                
+                if (viewIt.length == 1) {
                     //Da italiano a inglese
                     $('#switcher-language-nav .view-en.switcher-option').on('click touchstart', function(e) {
                         window.location.href = '//www.kartandgo.store/en';
                         e.preventDefault();
                         return false;
                     });
+
+                    //Da italiano a francese
+                    $('#switcher-language-nav .view-fr.switcher-option').on('click touchstart', function(e) {
+                        window.location.href = '//www.kartandgo.store/fr';
+                        e.preventDefault();
+                        return false;
+                    });
+
+                    return;
+                }
+
+                if (viewFr.length == 1) {
+                    //Da francese a italiano
+                    $('#switcher-language-nav .view-it.switcher-option').on('click touchstart', function(e) {
+                        window.location.href = '//www.kartandgo.store';
+                        e.preventDefault();
+                        return false;
+                    });
+
+                    //Da francese a inglese
+                    $('#switcher-language-nav .view-en.switcher-option').on('click touchstart', function(e) {
+                        window.location.href = '//www.kartandgo.store/en';
+                        e.preventDefault();
+                        return false;
+                    });
+
+                    return;
                 }
             };
         }

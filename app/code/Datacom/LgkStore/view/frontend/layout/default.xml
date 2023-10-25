@@ -7,6 +7,9 @@
 -->
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
+        <referenceContainer name="after.body.start">
+            <block class="Magento\Framework\View\Element\Template" name="dtm.utilities.after.body.start" template="Datacom_LgkStore::page/after_body_starts.phtml"/>
+        </referenceContainer>
         <referenceContainer name="before.body.end">
             <block class="Magento\Framework\View\Element\Template" name="dtm.utilities.before.body.end" template="Datacom_LgkStore::page/before_body_ends.phtml"/>
         </referenceContainer>

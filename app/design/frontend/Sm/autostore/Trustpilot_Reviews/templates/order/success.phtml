@@ -1,4 +1,5 @@
-<?php /* @var $block \Trustpilot\Reviews\Block\Success */?>     
+<?php /*
+<?php /* @var $block \Trustpilot\Reviews\Block\Success *//* ?>     
 <?php
     $orderJsonOutput = $block->getOrder();
     $orderData = json_decode($orderJsonOutput, true);
@@ -7,7 +8,9 @@
     document.addEventListener('DOMContentLoaded', function() {
         tp('createInvitation',<?php echo $orderJsonOutput; ?>);
     });
-    <?php if (array_key_exists('recipientEmail', $orderData)): ?>
-    var mailClienteOrdine = '<?php echo $orderData['recipientEmail']; ?>';
-    <?php endif; ?>
 </script>
+<?php if (array_key_exists('recipientEmail', $orderData)): ?>
+    <p>E-mail cliente: <span id="success-order-mail"><?php echo $orderData['recipientEmail']; ?></span></p>
+<?php endif; ?>
+
+*/ ?>

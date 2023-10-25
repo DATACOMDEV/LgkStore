@@ -1,114 +1,233 @@
-<!-- INIZIO: BLOCCO BANNER FERIE DA RIMUOVERE O COMMENTARE -->
+<!-- INIZIO: BLOCCO BANNER FERIE DA RIMUOVERE O COMMENTARE 
+
 <div class="cart-bar-info must-not-show"><div><span><?= __('Orders placed between <strong>August 6th</strong> and <strong>17th</strong> included will be shipped starting from <strong>August 19th</strong>.') ?></span></div></div>
+
 <style type="text/css">
+
     .must-not-show {
+
         display: none !important;
+
     }
+
     .cart-bar-info {
+
         width: 100%;
+
         text-align: center;
+
         color: rgb(255, 45, 55);
+
         padding: 5px 10px;
+
         border: 1px solid rgb(255, 45, 55);
+
     }
+
     @media (max-width: 991px) {
+
         #form-validate .cart-bar-info {
+
             display: none !important;
+
         }
+
     }
+
     @media (min-width: 992px) {
+
         .column.main > .cart-bar-info {
+
             display: none !important;
+
         }
+
     }
+
 </style>
+
 <script>
+
     require(
+
         ['jquery'],
+
         function($) {
+
             var todo = function() {
+
                 if ($('.opc-progress-bar').length == 0) {
+
                     setTimeout(function() {
+
                         todo();
+
                     }, 150);
+
                     return;
+
                 }
 
+
+
                 var targetItem = $('.cart-bar-info');
+
                 $('.opc-progress-bar').after(targetItem);
+
                 targetItem.removeClass('must-not-show');
+
             };
 
+
+
             todo();
+
         }
+
     );
+
 </script>
-<!-- FINE: BLOCCO BANNER FERIE DA RIMUOVERE O COMMENTARE -->
+
+FINE: BLOCCO BANNER FERIE DA RIMUOVERE O COMMENTARE -->
+
+
+
+
 
 
 
 <script type="text/javascript">
+
     require(
+
         ['jquery'],
+
         function($) {
+
             var working = 0;
 
+
+
             var ajaxUpdate = function(grandTotalNode) {
+
                 $.ajax({
+
                     method: 'GET',
+
                     url: '<?= $block->getUrl('datacom/checkout/info') ?>',
+
                     dataType: 'json'
+
                 }).done(function(data) {
+
                     if (data.errors.length > 0) {
+
                         for (var i = 0; i < data.errors.length; i++) {
+
                             console.error(data.errors[i]);
+
                         }
+
                         return;
+
                     }
+
+
 
                     var nextGrandTotal = grandTotalNode.next('tr.incl-taxvat');
+
                     if (nextGrandTotal.length != 0) {
+
                         nextGrandTotal.remove();
+
                     }
 
+
+
                     var oldPrice = grandTotalNode.find('span.price').html();
+
                     var backorderTotalNode = grandTotalNode.clone();
+
                     backorderTotalNode.addClass('incl-taxvat');
-                    backorderTotalNode.find('td.mark strong').html('Totale ordine (IVA inclusa)');
+
+                    if ($('html[lang="it"]').length > 0) {
+                        backorderTotalNode.find('td.mark strong').html('Totale ordine (IVA inclusa)');
+                    } else if ($('html[lang="fr"]').length > 0) {
+                        backorderTotalNode.find('td.mark strong').html('Total de la commande (taxes comprises)');
+                    } else {
+                        backorderTotalNode.find('td.mark strong').html('Order total (tax included)');
+                    }
+
                     backorderTotalNode.find('span.price').html(data.content.grand_total);
+
                     backorderTotalNode.attr('data-old-price', oldPrice);
+
                     grandTotalNode.after(backorderTotalNode);
+
+
 
                     grandTotalNode.attr('data-grandtotal-handled', '1');
 
+
+
                     working = 0;
+
                 });
+
             };
 
+
+
             $(document).on('DOMSubtreeModified', '.opc-block-summary .data.table.table-totals .grand.totals:not(.grandtotal-handled)', function() {
+
                 var self = $(this);
+
+
 
                 if (self.hasClass('grandtotal-handled')) return;
 
+
+
                 self.addClass('grandtotal-handled');
 
+
+
                 ajaxUpdate(self);
+
             });
 
+
+
             $(document).on('DOMSubtreeModified', '.opc-block-summary .data.table.table-totals .grand.totals[data-grandtotal-handled="1"]', function() {
+
                 if (working == 1) return;
+
+
 
                 working = 1;
 
+
+
                 var self = $(this);
+
                 var next = self.next('tr');
 
+
+
                 if (self.find('span.price').html() == next.attr('data-old-price')) {
+
                     working = 0;    
+
                 } else {
+
                     ajaxUpdate(self);
+
                 }
+
             });
+
         }
+
     );
+
 </script>

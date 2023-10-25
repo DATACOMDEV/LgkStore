@@ -1,0 +1,10 @@
+<?php /* @var $block \Trustpilot\Reviews\Block\Success */?>     
+<?php
+    $orderJsonOutput = $block->getOrder();
+    $orderData = json_decode($orderJsonOutput, true);
+?>
+<?php /*if (array_key_exists('recipientEmail', $orderData)): ?>
+    <script type="text/javascript">
+        var mailClienteOrdine = '<?php echo $orderData['recipientEmail']; ?>';
+    </script>
+<?php endif;*/ ?>

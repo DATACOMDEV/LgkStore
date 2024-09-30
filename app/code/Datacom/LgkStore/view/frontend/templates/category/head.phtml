@@ -3,6 +3,7 @@
     $categoryLanguageUrl = $dtmUrlHelper->getCategoryUrl();
 ?>
 <?php foreach ($categoryLanguageUrl as $code => $url): ?>
+    <?php if ($code == 'de') continue; ?>
     <link rel="alternate" href="<?= $url ?>" hreflang="<?= $code ?>"/>
 <?php endforeach; ?>
 <script type="text/javascript">

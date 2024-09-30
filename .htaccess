@@ -1,15 +1,3 @@
-#Header set Strict-Transport-Security "max-age=31536000" env=HTTPS
-#Deny from 151.210.245.159
-#Deny from 81.37.33.37
-#Deny from 93.36.97.3
-#Deny from 2.3.88.177
-
-<IfModule mod_dtimeout.c>
-<Files ~ ".php">
-#SetEnvIf Request_URI "index.php" DynamicTimeout=300
-</Files>
-</IfModule>
-
 ############################################
 ## overrides deployment configuration mode value
 ## use command bin/magento deploy:mode:set to switch modes
@@ -42,7 +30,7 @@
 ############################################
 ## enable usage of methods arguments in backtrace
 
-    #SetEnv MAGE_DEBUG_SHOW_ARGS 1
+#    SetEnv MAGE_DEBUG_SHOW_ARGS 1
 
 ############################################
 ## default index file
@@ -99,8 +87,8 @@
 ###########################################
 ## disable POST processing to not break multiple image upload
 
-#    SecFilterEngine Off
-#    SecFilterScanPOST Off
+    SecFilterEngine Off
+    SecFilterScanPOST Off
 </IfModule>
 
 <IfModule mod_deflate.c>
@@ -112,7 +100,7 @@
     # Insert filter on all content
     ###SetOutputFilter DEFLATE
     # Insert filter on selected content types only
-    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/x-javascript application/json image/svg+xml
+    #AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/x-javascript application/json image/svg+xml
 
     # Netscape 4.x has some problems...
     #BrowserMatch ^Mozilla/4 gzip-only-text/html
@@ -154,50 +142,13 @@
 
     Options +SymLinksIfOwnerMatch
     RewriteEngine on
-	
-############################################
-## DATACOM - forzo www
-
-	#RewriteCond %{REMOTE_ADDR} !^93\.51\.70\.109
-	#RewriteCond %{REMOTE_ADDR} !^79\.8\.112\.38
-	#RewriteCond %{REMOTE_ADDR} !^222\.252\.17\.220
-	#RewriteCond %{REMOTE_ADDR} !^113\.190\.242\.24
-	#RewriteCond %{REMOTE_ADDR} !^27\.67\.19\.185
-	#RewriteRule .* http://www.lgkstore.it? [L,R=301]
-	
-	#RewriteCond %{REMOTE_ADDR} !^93\.51\.70\.109
-	#RewriteCond %{REMOTE_ADDR} !^79\.8\.112\.38
-	#RewriteCond %{REQUEST_URI} !/maintenance\.html$
-	#RewriteRule .* https://www.kartandgo.store/maintenance.html? [L,R=302]
-
-	#RewriteCond %{HTTP_HOST} ^kartandgo.store [NC]
-	#RewriteRule ^(.*)$ https://www.kartandgo.store/$1 [L,R=301]
-	
-############################################
-## DATACOM - forzo www se non c'è sottodominio
-
-    RewriteCond %{HTTP_HOST} ^[^.]+\.[^.]+$
-    RewriteRule ^(.*)$ https://www.%{HTTP_HOST}/$1 [L,R=301]
-
-############################################
-## DATACOM - forzo https se non sto passando dal sottodominio api o cdn
-
-    RewriteCond %{HTTP_HOST} !^(cdn|api)\.[^.]+$ [NC]
-    RewriteCond %{HTTPS} off
-    RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 
 ############################################
 ## you can put here your magento root folder
 ## path relative to web root
 
     #RewriteBase /magento/
-	
-############################################
-## DATACOM - blocco bot
 
-    #RewriteCond %{HTTP_USER_AGENT} ^.*(SemrushBot|Adsbot|UptimeRobot).*$ [NC]
-	#RewriteRule .* - [F,L]
-	
 ############################################
 ## workaround for HTTP authorization
 ## in CGI environment
@@ -223,25 +174,7 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-l
-	
-############################################
-## DATACOM - rewrite personalizzati
-	
-	RewriteRule ^(en|it|fr)/privacy-policy-cookie-restriction-mode(/?)$ /$1/privacy-policy/ [L,R=301]
-	#RewriteCond %{REQUEST_URI} !\.html$
-	#RewriteRule ^it/prodotti/(.*[^/])?/?$ it/prodotti/$1.html [L,R=301]
 
-	RewriteRule ^it(/*)$ https://www.kartandgo.store [L,R=301]
-	#RewriteCond %{REQUEST_URI} ^/(a|b|c|d|f|g|h|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|ea|eb|ec|ed|ee|ef|eg|eh|ei|ej|ek|el|em|eo|ep|eq|er|es|et|eu|ev|ew|ex|ey|ez|ia|ib|ic|id|ie|if|ig|ih|ii|ij|ik|il|im|io|ip|iq|ir|is|iu|iv|iw|ix|iy|iz|ina|inb|inc|ine|inf|ing|inh|ini|inj|ink|inl|inm|inn|ino|inp|inq|inr|ins|int|inu|inv|inw|inx|iny|inz|inda|indb|indc|indd|indf|indg|indh|indi|indj|indk|indl|indm|indn|indo|indp|indq|indr|inds|indt|indu|indv|indw|indx|indy|indz|indea|indeb|indec|inded|indee|indef|indeg|indeh|indei|indej|indek|indel|indem|inden|indeo|indep|indeq|inder|indes|indet|indeu|indev|indew|indey|indez)
-	#RewriteRule ^(.*)$ https://www.kartandgo.store/it/$1 [L,R=301]
-
-    #Da togliere quando il francese sarà pubblicato
-    #RewriteCond %{REMOTE_ADDR} !^(94\.138\.175\.51|212\.210\.1\.157)
-    #RewriteRule ^(fr|fr/(.*))$ https://www.kartandgo.store [R=301,L]
-	
-	#RewriteRule ^en/noleggio-kart$ https://www.kartandgo.store/en/kart-rental [L,R=301]
-	#RewriteRule ^it/kart-rental$ https://www.kartandgo.store/it/noleggio-kart [L,R=301]
-	
 ############################################
 ## rewrite everything else to index.php
 
@@ -489,7 +422,7 @@ ErrorDocument 403 /pub/errors/404.php
         Header unset X-UA-Compatible
     </FilesMatch>
 	
-	SetEnvIf Origin "http(s)?://(.+\.)?(kartandgo\.store)(:\d{1,5})?$" CORS=$0
+	SetEnvIf Origin "http(s)?://(.+\.)?(kartandgo\.store|kartandgo\.de)(:\d{1,5})?$" CORS=$0
     Header set Access-Control-Allow-Origin "%{CORS}e" env=CORS
     Header merge  Vary "Origin"
     #Header add Access-Control-Allow-Origin "*"
@@ -501,10 +434,10 @@ ErrorDocument 403 /pub/errors/404.php
 # SP BEGIN php handler
 <IfModule mod_fcgid.c>
           AddHandler fcgid-script .php .php5 .php7 .phtml
-          FcgidWrapper    /usr/local/cpanel/cgi-sys/sp-ea-php72 .php
-          FcgidWrapper    /usr/local/cpanel/cgi-sys/sp-ea-php72 .php5
-          FcgidWrapper    /usr/local/cpanel/cgi-sys/sp-ea-php72 .php7
-          FcgidWrapper    /usr/local/cpanel/cgi-sys/sp-ea-php72 .phtml
+          FcgidWrapper    /usr/local/cpanel/cgi-sys/sp-ea-php74 .php
+          FcgidWrapper    /usr/local/cpanel/cgi-sys/sp-ea-php74 .php5
+          FcgidWrapper    /usr/local/cpanel/cgi-sys/sp-ea-php74 .php7
+          FcgidWrapper    /usr/local/cpanel/cgi-sys/sp-ea-php74 .phtml
 </IfModule>
 # SP END php handler
 

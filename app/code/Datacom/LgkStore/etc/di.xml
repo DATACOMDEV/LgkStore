@@ -28,6 +28,7 @@
 				<item name="syncnewsletteraccountcommand" xsi:type="object">Datacom\LgkStore\Console\Command\SyncNewsletterAccountCommand</item>
 				<item name="generatecustomerpricepercategorycommand" xsi:type="object">Datacom\LgkStore\Console\Command\GenerateCustomerPricePerCategoryCommand</item>
 				<item name="populatefrenchurlkeycommand" xsi:type="object">Datacom\LgkStore\Console\Command\PopulateFrenchUrlKeyCommand</item>
+				<item name="populatedeutschurlkeycommand" xsi:type="object">Datacom\LgkStore\Console\Command\PopulateDeutschUrlKeyCommand</item>
 			</argument>
 		</arguments>
 	</type>

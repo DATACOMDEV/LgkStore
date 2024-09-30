@@ -78,3 +78,9 @@ Hi,Ciao
 "Select Option ...","Seleziona un valore"
 "This is a required field","Questo campo è obbligatorio"
 "This is a required field.","Questo campo è obbligatorio."
+"My Account","Il mio Account",module,Magento_Backend
+"My Account","Il mio Account",module,Magento_Customer
+"My Account","Il mio Account",theme,frontend\Magento\luma
+"My Account","Il mio Account",theme,frontend/Magento/luma
+"My Account","Il mio Account",theme,frontend/Magento/blank
+"My Account","Il mio Account",theme,frontend\Magento\blank

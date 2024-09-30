@@ -81,7 +81,11 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper {
         if (is_null($this->ceeIds)) {
             $conn = $this->_resourceConnection->getConnection();
 
-            $result = $conn->fetchCol('SELECT country_set FROM '.$conn->getTableName('amasty_shipping_area').' WHERE name=\'CEE\'');
+            try {
+                $result = $conn->fetchCol('SELECT country_set FROM '.$this->_resourceConnection->getTableName('amasty_shipping_area').' WHERE name=\'CEE\'');
+            } catch (\Exception $ex) {
+                $result = $conn->fetchCol('SELECT country_set FROM '.$conn->getTableName('amasty_shipping_area').' WHERE name=\'CEE\'');
+            }
             
             $this->ceeIds = [];
 
@@ -92,5 +96,9 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper {
         }
 
         return $this->ceeIds;
+    }
+
+    public function getStoreId() {
+        return $this->_store->getStore()->getStoreId();
     }
 }

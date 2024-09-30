@@ -1,0 +1,8 @@
+Query per togliere immagini residue da store non default:
+
+SELECT * FROM `catalog_product_entity_varchar` WHERE entity_id=2414
+AND store_id<>0 AND attribute_id IN (84, 85, 86)
+
+
+DELETE FROM catalog_product_entity_varchar
+WHERE store_id<>0 AND attribute_id IN (84, 85, 86)

@@ -148,7 +148,45 @@ $_dtmDataHelper = $this->helper(\Datacom\LgkStore\Helper\Data::class);
 
                 var done = false;
 
-                $(document).on('DOMSubtreeModified', '#co-shipping-form #shipping-new-address-form', function() {
+                var config44 = { attributes: true, childList: true, characterData: true, subtree: true };
+                var target33 = $('#checkout').get(0);
+                var doneMutation = false;
+                var observer = new MutationObserver(function(mutations) {
+                    if (doneMutation) return;
+                    mutations.forEach(function(mutation) {
+                        for (const node of mutation.addedNodes) {
+                            if (!node.tagName) continue;
+                            if (!node.id) continue;
+                            if (node.id != 'co-shipping-form') continue;
+                            console.log('ok');
+                            $('#co-shipping-form #shipping-new-address-form').each(function(index) {
+                                if (done) {
+                                    return;
+                                }
+
+                                var item = this;
+
+                                var startPopulateData = function() {
+                                    if (populatePrecompiledData(item)) {
+                                        done = true;
+                                    } else {
+                                        setTimeout(function() {
+                                            startPopulateData();
+                                        }, 500);
+                                    }
+                                };
+
+                                startPopulateData();
+                            });
+                            doneMutation = true;
+                            break;
+                            //observer.disconnect();
+                        }
+                    });
+                });
+                observer.observe(target33, config44);
+
+                /*$(document).on('DOMSubtreeModified', '#co-shipping-form #shipping-new-address-form', function() {
                     if (done) {
                         return;
                     }
@@ -166,7 +204,7 @@ $_dtmDataHelper = $this->helper(\Datacom\LgkStore\Helper\Data::class);
                     };
 
                     startPopulateData();
-                });
+                });*/
             }
         );
     </script>

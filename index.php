@@ -18,22 +18,23 @@
  * See COPYING.txt for license details.
  */
 
-/*if ($_SERVER['REMOTE_ADDR'] != '79.8.112.38') {
-	require 'maintenance.html';
-	die();
-}*/
-
-$requestUri = $_SERVER['REQUEST_URI'];
-$requestUriLength = strlen($requestUri);
-$mustRedirect = false;
-if (substr($requestUri, 0, 14) != '/admin_10kq5z/' &&
-!in_array(substr($requestUri, 0, 4), ['/en/', '/it/'])) {
-    $mustRedirect = true;
+if (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === 'off' || $_SERVER['SERVER_PORT'] != 443) {
+    $location = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+    header('HTTP/1.1 301 Moved Permanently');
+    header('Location: ' . $location);
+    exit();
 }
 
-if ($mustRedirect) {
-    header("location: https://www.kartandgo.store/it".$requestUri);
-    die();
+ $allowedIps = [
+    '94.138.175.51',    //nostro
+    '46.114.214.113',    //tedesco
+    '185.89.39.21'      //tedesco 2
+];
+
+if (in_array($_SERVER['HTTP_HOST'], ['www.kartandgo.de', 'kartandgo.de']) &&
+!in_array($_SERVER['REMOTE_ADDR'], $allowedIps)) {
+    header('Location: https://www.kartandgo.store');
+    exit();
 }
 
 try {
@@ -51,15 +52,30 @@ HTML;
     exit(1);
 }
 
-/*$dbConfigParameters = require dirname(__FILE__).'/app/etc/env.php';
-require(dirname(__FILE__) . '/ThrottleRequest.php' );
-$tr = new ThrottleRequest([
-	'db_user' => $dbConfigParameters['db']['connection']['default']['username'],
-	'db_pass' => $dbConfigParameters['db']['connection']['default']['password'],
-	'db_dbname' => $dbConfigParameters['db']['connection']['default']['dbname']
-]);*/
+if (in_array($_SERVER['REMOTE_ADDR'], $allowedIps)) {
+    $params = $_SERVER;
 
-$bootstrap = \Magento\Framework\App\Bootstrap::create(BP, $_SERVER);
-/** @var \Magento\Framework\App\Http $app */
-$app = $bootstrap->createApplication(\Magento\Framework\App\Http::class);
-$bootstrap->run($app);
+    if (array_key_exists('HTTP_HOST', $params)) {
+        $params[\Magento\Store\Model\StoreManager::PARAM_RUN_TYPE] = 'website';
+        
+        switch($_SERVER['HTTP_HOST']) {
+            case 'kartandgo.de':
+            case 'www.kartandgo.de':
+                $params[\Magento\Store\Model\StoreManager::PARAM_RUN_CODE] = 'base_de';
+                break;
+            default:
+                $params[\Magento\Store\Model\StoreManager::PARAM_RUN_CODE] = 'base';
+                break;
+        }
+    }
+
+    $bootstrap = \Magento\Framework\App\Bootstrap::create(BP, $params);
+    /** @var \Magento\Framework\App\Http $app */
+    $app = $bootstrap->createApplication(\Magento\Framework\App\Http::class);
+    $bootstrap->run($app);
+} else {
+    $bootstrap = \Magento\Framework\App\Bootstrap::create(BP, $_SERVER);
+    /** @var \Magento\Framework\App\Http $app */
+    $app = $bootstrap->createApplication(\Magento\Framework\App\Http::class);
+    $bootstrap->run($app);
+}

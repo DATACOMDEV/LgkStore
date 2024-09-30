@@ -1,3 +1,7 @@
+<?php
+$_dtmHelper = $this->helper('Datacom\LgkStore\Helper\Data');
+?>
+
 <script type="text/javascript">
     require(
         [
@@ -75,8 +79,10 @@
     );
 </script>
 
+<?php if ($_dtmHelper->getStoreId() != 21): ?>
 <!-- TIDIO -->
 <script src="//code.tidio.co/thghzdgdwcqpjxmbryagpmmqwvqze6c6.js" async></script>
+<?php endif; ?>
 
 <!-- INIZIO: BLOCCO BANNER FERIE DA RIMUOVERE O COMMENTARE -->
 <!-- <div id="top-bar-info"><div><span><?= __('Orders placed between <strong>August 6th</strong> and <strong>17th</strong> included will be shipped starting from <strong>August 19th</strong>.') ?></span></div></div>

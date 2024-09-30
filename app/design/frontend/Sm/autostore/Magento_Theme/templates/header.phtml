@@ -1,10 +1,6 @@
-<!-- Google Tag Manager VECCHIO -->
-<!-- <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-PWC2MQX');</script> -->
-<!-- End Google Tag Manager -->
+<?php
+$_dtmHelper = $this->helper('Datacom\LgkStore\Helper\Data');
+?>
 <meta name="facebook-domain-verification" content="t4jw4x60e3hc6crq5klrqrjdyf5x6l" /> 
 <link rel="preload" as="style" href="<?= $block->getViewFileUrl('fonts/Blank-Theme-Icons/Blank-Theme-Icons.woff2'); ?>">
 <!-- Global site tag (gtag.js) - Google Ads: 388797009 -->
@@ -59,7 +55,37 @@ src="https://www.facebook.com/tr?id=294341321923363&ev=PageView&noscript=1"
 <style type="text/css">
   html[lang="en"] .hidden-en,
   html[lang="it"] .hidden-it,
-  html[lang="fr"] .hidden-fr {
+  html[lang="fr"] .hidden-fr,
+  html[lang="de"] .hidden-de {
     display: none !important;
   }
 </style>
+<?php if ($_dtmHelper->getStoreId() == 20): ?>
+  <script type="text/javascript">
+    require(
+      ['jquery'],
+      function($) {
+        $('h1.page-title span').each(function() {
+          if ($(this).html() == 'My Account') {
+            $(this).html('Il mio Account');
+          }
+        });
+        $('.nav.items .nav.item').each(function() {
+          if ($(this).html() == 'My Account') {
+            $(this).html('Il mio Account');
+            return;
+          }
+          if ($(this).html() == '<strong>My Account</strong>') {
+            $(this).html('<strong>Il mio Account</strong>');
+            return;
+          }
+        });
+        $('.customer-menu > ul > li:first-child a').each(function() {
+          if ($(this).html() == 'My Account') {
+            $(this).html('Il mio Account');
+          }
+        });
+      }
+    );
+  </script>
+<?php endif; ?>

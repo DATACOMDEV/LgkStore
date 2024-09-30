@@ -1,4 +1,5 @@
 <?php
+//FILE IGNORABILE!
 /**
  * Mageplaza
  *

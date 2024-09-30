@@ -318,6 +318,9 @@ html[lang="en"] body.catalog-product-view .product-info-main .prices-tier.items:
 html[lang="fr"] body.catalog-product-view .product-info-main .prices-tier.items:before {
 	content: "Remise par quantité";
 }
+html[lang="de"] body.catalog-product-view .product-info-main .prices-tier.items:before {
+	content: "Rabatt nach Menge";
+}
 body.catalog-product-view .product-info-main .price-container.price-tier_price .price-including-tax + .price-excluding-tax:before {
 	content: "(" attr(data-label) ": ";
 }
@@ -362,6 +365,9 @@ html[lang="it"] #checkout-payment-method-load .items.payment-methods .payment-gr
 html[lang="fr"] #checkout-payment-method-load .items.payment-methods .payment-group > .payment-method:last-child:nth-child(2) > .payment-method-title > label > span:before {
 	content: "Devis";
 }
+html[lang="de"] #checkout-payment-method-load .items.payment-methods .payment-group > .payment-method:last-child:nth-child(2) > .payment-method-title > label > span:before {
+	content: "Schätzen";
+}
 body.cms-index-index .deal-block {
 	padding: 150px 28px 100px 40px;
 }
@@ -389,7 +395,9 @@ html[lang="it"] .table-checkout-shipping-method > tbody > tr[data-carrier-code="
 html[lang="en"] .table-checkout-shipping-method > tbody > tr[data-carrier-code="preventivo_preventivo"] ~ tr:last-child:after,
 html[lang="en"] .table-checkout-shipping-method > tbody > tr[data-carrier-code="preventivo_preventivo"]:last-child:after,
 html[lang="fr"] .table-checkout-shipping-method > tbody > tr[data-carrier-code="preventivo_preventivo"] ~ tr:last-child:after,
-html[lang="fr"] .table-checkout-shipping-method > tbody > tr[data-carrier-code="preventivo_preventivo"]:last-child:after {
+html[lang="fr"] .table-checkout-shipping-method > tbody > tr[data-carrier-code="preventivo_preventivo"]:last-child:after,
+html[lang="de"] .table-checkout-shipping-method > tbody > tr[data-carrier-code="preventivo_preventivo"] ~ tr:last-child:after,
+html[lang="de"] .table-checkout-shipping-method > tbody > tr[data-carrier-code="preventivo_preventivo"]:last-child:after {
 	margin: 0 0 10px;
     padding: 10px 20px;
     display: block;
@@ -410,6 +418,10 @@ html[lang="en"] .table-checkout-shipping-method > tbody > tr[data-carrier-code="
 html[lang="fr"] .table-checkout-shipping-method > tbody > tr[data-carrier-code="preventivo_preventivo"] ~ tr:last-child:after,
 html[lang="fr"] .table-checkout-shipping-method > tbody > tr[data-carrier-code="preventivo_preventivo"]:last-child:after {
 	content: "Vous avez besoin d'un devis d'expédition pour envoyer les marchandises dans le pays choisi. Si vous choisissez le devis, vous serez contacté dans les 4 heures suivant la réception de la commande.";
+}
+html[lang="de"] .table-checkout-shipping-method > tbody > tr[data-carrier-code="preventivo_preventivo"] ~ tr:last-child:after,
+html[lang="de"] .table-checkout-shipping-method > tbody > tr[data-carrier-code="preventivo_preventivo"]:last-child:after {
+	content: "Sie benötigen ein Versandangebot, um die Waren in das von Ihnen gewählte Land zu versenden. Wenn Sie sich für das Angebot entscheiden, werden Sie innerhalb von 4 Stunden nach Eingang der Bestellung kontaktiert.";
 }
 .trustpilot-widget[data-template-id="5419b6a8b0d04a076446a9ad"] {
 	float: left;
@@ -726,7 +738,8 @@ html[lang="fr"] .table-checkout-shipping-method > tbody > tr[data-carrier-code="
 		font-size: 11px;
 	}
 	html[lang="en"] .customer-action .header.links > li:nth-child(2) > a,
-	html[lang="fr"] .customer-action .header.links > li:nth-child(2) > a {
+	html[lang="fr"] .customer-action .header.links > li:nth-child(2) > a,
+	html[lang="de"] .customer-action .header.links > li:nth-child(2) > a {
 		color: transparent;
 		font-size: 0;
 	}
@@ -735,8 +748,13 @@ html[lang="fr"] .table-checkout-shipping-method > tbody > tr[data-carrier-code="
 		color: rgb(204, 204, 204);
 		font-size: 11px;
 	}
-	html[lang="en"] .customer-action .header.links > li:nth-child(2) > a:before {
+	html[lang="fr"] .customer-action .header.links > li:nth-child(2) > a:before {
 		content: "Créer un compte";
+		color: rgb(204, 204, 204);
+		font-size: 11px;
+	}
+	html[lang="de"] .customer-action .header.links > li:nth-child(2) > a:before {
+		content: "Ein Konto erstellen";
 		color: rgb(204, 204, 204);
 		font-size: 11px;
 	}
@@ -945,4 +963,22 @@ width: 50px;
 
 #cvetta {
     margin-top: 50px !important;
+}
+
+.content-footer.content-about .social {
+	margin-top: 30px;
+}
+
+.social > a {
+	transition: 0.2s;
+    -moz-transition: 0.2s;
+    -webkit-transition: 0.2s;
+}
+
+.social > a:not(:last-child) {
+	margin-right: 5px;
+}
+
+.social > a:hover {
+	color: #ff2d37;
 }

@@ -2554,7 +2554,7 @@ Usa solo lettere (a-z o A-Z) o numeri (0-9) in questo campo. Non sono consentiti
 "Tier prices data should be array, but actually other type is received","I dati del prezzo più alto dovrebbero essere array, ma i dati ricevuti sono di un tipo differente",module,Magento_Catalog
 "Price indexer ""%1"" must implement %2 or %3","Indicizzatore di prezzo ""%1"" deve implementare %2 o %3",module,Magento_Catalog
 "You added product %1 to the <a href=""%2"">comparison list</a>.","Hai aggiunto il prodotto %1 alla lista di confronto <a href=""%2""></a>.",module,Magento_Catalog
-"Maximum %1 characters","Massimo: %s caratteri",module,Magento_Catalog
+"Maximum %1 characters","Massimo: %1 caratteri",module,Magento_Catalog
 "remaining","rimanenti",module,Magento_Catalog
 "too many","troppi",module,Magento_Catalog
 "Sending attribute values as package.","Invio di valori di attributo come pacchetto.",module,Magento_Catalog

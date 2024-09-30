@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<csp_whitelist xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Csp/etc/csp_whitelist.xsd">
+    <policies>
+        <policy id="script-src">
+            <values>
+                <value id="kartandgo-1" type="host">kartandgo.store</value>
+                <value id="kartandgo-2" type="host">www.kartandgo.store</value>
+                <value id="kartandgo-3" type="host">cdn.kartandgo.store</value>
+                <value id="kartandgo-4" type="host">kartandgo.de</value>
+                <value id="kartandgo-5" type="host">www.kartandgo.de</value>
+                <value id="kartandgo-adobe-1" type="host">assets.adobedtm.com</value>
+            </values>
+        </policy>
+        <policy id="style-src">
+            <values>
+                <value id="kartandgo-6" type="host">kartandgo.store</value>
+                <value id="kartandgo-7" type="host">www.kartandgo.store</value>
+                <value id="kartandgo-8" type="host">cdn.kartandgo.store</value>
+                <value id="kartandgo-9" type="host">kartandgo.de</value>
+                <value id="kartandgo-10" type="host">www.kartandgo.de</value>
+            </values>
+        </policy>
+        <policy id="img-src">
+            <values>
+                <value id="kartandgo-11" type="host">kartandgo.store</value>
+                <value id="kartandgo-12" type="host">www.kartandgo.store</value>
+                <value id="kartandgo-13" type="host">cdn.kartandgo.store</value>
+                <value id="kartandgo-14" type="host">kartandgo.de</value>
+                <value id="kartandgo-15" type="host">www.kartandgo.de</value>
+            </values>
+        </policy>
+        <policy id="connect-src">
+            <values>
+                <value id="kartandgo-16" type="host">kartandgo.store</value>
+                <value id="kartandgo-17" type="host">www.kartandgo.store</value>
+                <value id="kartandgo-18" type="host">cdn.kartandgo.store</value>
+                <value id="kartandgo-19" type="host">kartandgo.de</value>
+                <value id="kartandgo-20" type="host">www.kartandgo.de</value>
+            </values>
+        </policy>
+        <policy id="font-src">
+            <values>
+                <value id="kartandgo-21" type="host">kartandgo.store</value>
+                <value id="kartandgo-22" type="host">www.kartandgo.store</value>
+                <value id="kartandgo-23" type="host">cdn.kartandgo.store</value>
+                <value id="kartandgo-24" type="host">kartandgo.de</value>
+                <value id="kartandgo-25" type="host">www.kartandgo.de</value>
+            </values>
+        </policy>
+    </policies>
+</csp_whitelist>

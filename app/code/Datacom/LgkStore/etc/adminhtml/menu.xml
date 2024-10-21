@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+   <menu>
+       <add id="Datacom_LgkStore::menu"
+           title="LGK Store" module="Datacom_LgkStore"
+           sortOrder="10"
+           resource="Magento_Backend::content"
+           parent="Magento_Catalog::catalog"
+           />
+       <add id="Datacom_LgkStore::menu_item_index"
+           title="Aggiornamento prezzi" module="Datacom_LgkStore"
+           sortOrder="10" parent="Datacom_LgkStore::menu"
+           action="lgkstore/pricelistsbackend/index"
+           resource="Datacom_LgkStore::menu_item_index"
+           />
+        <add id="Datacom_LgkStore::menu_item_backup"
+           title="Backup aggiornamento prezzi" module="Datacom_LgkStore"
+           sortOrder="10" parent="Datacom_LgkStore::menu"
+           action="lgkstore/pricelistsbackend/backuplisting"
+           resource="Datacom_LgkStore::menu_item_backup"
+           />
+   </menu>
+</config>

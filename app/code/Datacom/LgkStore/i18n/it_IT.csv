@@ -84,3 +84,15 @@ Hi,Ciao
 "My Account","Il mio Account",theme,frontend/Magento/luma
 "My Account","Il mio Account",theme,frontend/Magento/blank
 "My Account","Il mio Account",theme,frontend\Magento\blank
+"Price list updated","Listino prezzi aggiornato"
+"There was no need to update any price","Non risultano modifiche da apportare al listino attuale"
+"Already have an account? Click here to login","Hai già un account? Clicca qui per accedere."
+"Create account","Crea account"
+"Login successfully. Please wait...","Login effettuato. Attendere..."
+"New Address","Nuovo indirizzo"
+"You already have an account with us.","Hai già un account con questo nome."
+"or continue as guest.","o continua come ospite."
+"Sorry, no quotes are available for this order at this time","Siamo spiacenti, al momento non ci sono metodi disponibili per questo ordine"
+"Sorry, no quotes are available for this order at this time","Siamo spiacenti, al momento non ci sono metodi disponibili per questo ordine",module,Magetop_Osc
+"Sorry, no quotes are available for this order at this time","Siamo spiacenti, al momento non ci sono metodi disponibili per questo ordine",module,Magento_Checkout
+"Sorry, no quotes are available for this order at this time","Siamo spiacenti, al momento non ci sono metodi disponibili per questo ordine",module,Magento_NegotiableQuote

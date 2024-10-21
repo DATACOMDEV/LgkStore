@@ -3134,7 +3134,6 @@ Time in seconds between the widget updates.,module,Magento_CatalogWidget
 "New Address","Neue Adresse",module,Magento_Checkout
 "Shipping Methods","Shipping Methods",module,Magento_Checkout
 "Next","Next",module,Magento_Checkout
-"Sorry, no quotes are available for this order at this time","Sorry, no quotes are available for this order at this time",module,Magento_Checkout
 "Order Summary","Bestellübersicht",module,Magento_Checkout
 "View Details","Details anzeigen",module,Magento_Checkout
 "Provided Zip/Postal Code seems to be invalid.","Die angegebene Postleitzahl ist ungültig.",module,Magento_Checkout
@@ -8334,7 +8333,6 @@ Sie können ein neues Ablaufdatum festlegen, wenn Sie es wünschen.",module,Mage
 "Your shipping address is locked. To change your shipping address, go ","Your shipping address is locked. To change your shipping address, go ",module,Magento_NegotiableQuote
 "Shipping Methods","Shipping Methods",module,Magento_NegotiableQuote
 "Next","Next",module,Magento_NegotiableQuote
-"Sorry, no quotes are available for this order at this time","Sorry, no quotes are available for this order at this time",module,Magento_NegotiableQuote
 "Update Catalog Prices","Katalog-Preise aktualisieren",module,Magento_NegotiableQuote
 "If you proceed, catalog prices and cart discounts on this quote will be updated as per the latest changes in the catalog and the price rules.","Wenn Sie fortfahren, werden Katalog-Preise und Warenkorb Rabatte für dieses Angebot aktualisiert, nach den neuesten Änderungen im Katalog und die Preisregeln.",module,Magento_NegotiableQuote
 "No ordered items","Keine bestellten Produkte",module,Magento_NegotiableQuote
@@ -15406,3 +15404,9 @@ Hi,Hallo
 "Select Option ...","Wähle eine Option"
 "This is a required field","Dies ist ein Pflichtfeld"
 "This is a required field.","Dies ist ein Pflichtfeld."
+"Already have an account? Click here to login","Vous avez déjà un compte ?"
+"You already have an account with us.","Haben Sie bereits ein Konto?"
+"or continue as guest.","oder als Gast fortfahren."
+"Sorry, no quotes are available for this order at this time","Leider sind für diese Bestellung derzeit keine Angebote verfügbar",module,Magetop_Osc
+"Sorry, no quotes are available for this order at this time","Leider sind für diese Bestellung derzeit keine Angebote verfügbar",module,Magento_Checkout
+"Sorry, no quotes are available for this order at this time","Leider sind für diese Bestellung derzeit keine Angebote verfügbar",module,Magento_NegotiableQuote

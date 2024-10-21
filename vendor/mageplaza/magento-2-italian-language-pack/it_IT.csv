@@ -538,7 +538,6 @@ href=""https://dashboard.rjmetrics.com/v2/magento/signup/"">Magento BI Essential
 "All Store Views","Tutte le Viste Negozio",module,Magento_Backend
 "What is this?","Cos'è questo?",module,Magento_Backend
 "Save Account","Salva Account",module,Magento_Backend
-"My Account","Il mio Account",module,Magento_Backend
 "Account Information","Informazioni sull'account",module,Magento_Backend
 "User Name","Nome utente",module,Magento_Backend
 "First Name","Nome",module,Magento_Backend
@@ -3312,7 +3311,7 @@ Tempo in secondi tra gli aggiornamenti del widget.,module,Magento_CatalogWidget
 "Email Address","Indirizzo email",module,Magento_Checkout
 "Password","Password",module,Magento_Checkout
 "Forgot Your Password?","Hai dimenticato la password?",module,Magento_Checkout
-"My billing and shipping address are the same","Gli indirizzi di spedizione e di fatturazione coincidono",module,Magento_Checkout
+"My billing and shipping address are the same","Gli indirizzi di sped. e di fatt. coincidono",module,Magento_Checkout
 "Update","Aggiorna",module,Magento_Checkout
 "Cancel","Annulla",module,Magento_Checkout
 "Save in address book","Salva nella rubrica",module,Magento_Checkout
@@ -4844,7 +4843,6 @@ new products will be created. Use this step to customize images and price for yo
 "We're unable to send the password reset email.","Impossibile inviare l'email per il reset della password.",module,Magento_Customer
 "Please enter your email.","Inserisci la tua email.",module,Magento_Customer
 "If there is an account associated with %1 you will receive an email with a link to reset your password.","Se c'è un account associato con %1 riceverai un'email con il link per reimpostare la password.",module,Magento_Customer
-"My Account","Il mio Account",module,Magento_Customer
 "This account is not confirmed. <a href=""%1"">Click here</a> to resend confirmation email.","Questo account non è confermato. <a href=""%1"">Clicca qui</a> per reinviare l'email di conferma.",module,Magento_Customer
 "An unspecified error occurred. Please contact us for assistance.","Si è verificato un errore non specificato. Contattaci.",module,Magento_Customer
 "A login and a password are required.","Login e password sono obbligatori.",module,Magento_Customer
@@ -16283,7 +16281,6 @@ formElements/*[name(.)=../../@formElement]/settings/title,module,Magento_Ui
 "Account Information","Informazioni sull'account",theme,frontend\Magento\luma
 "About Us","Chi siamo",theme,frontend\Magento\luma
 "Customer Service","Assistenza Clienti",theme,frontend\Magento\luma
-"My Account","Il mio Account",theme,frontend\Magento\luma
 "Backup options","Opzioni backup",lib,web
 "Warning","Attenzione",lib,web
 "Cancel","Annulla",lib,web
@@ -16421,3 +16418,9 @@ formElements/*[name(.)=../../@formElement]/settings/title,module,Magento_Ui
 "The password can't be the same as the email address. Create a new password and try again.","La password non può essere uguale all'indirizzo di posta elettronica. Creare una nuova password e riprovare.",lib,web
 "My Wishlist","Lista dei desideri"
 "Ship Here","Spedisci qui"
+"My Account","Il mio Account",module,Magento_Backend
+"My Account","Il mio Account",module,Magento_Customer
+"My Account","Il mio Account",theme,frontend\Magento\luma
+"My Account","Il mio Account",theme,frontend/Magento/luma
+"My Account","Il mio Account",theme,frontend/Magento/blank
+"My Account","Il mio Account",theme,frontend\Magento\blank

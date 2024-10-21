@@ -14,5 +14,7 @@ class Constants
 
     const CUSTOM_REFERER_QUERY_PARAM = 'referer';
 
+    const TABLE_QUOTE_ATTRIBUTES = 'dtm_quote_attributes';
+
     const PATH_PRODUCT_DOCS = 'pub'.DIRECTORY_SEPARATOR.'media'.DIRECTORY_SEPARATOR.'docs'.DIRECTORY_SEPARATOR.'#STORECODE#'.DIRECTORY_SEPARATOR;
 }

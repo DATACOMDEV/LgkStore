@@ -126,7 +126,7 @@
 ############################################
 ## Enable rewrites
 
-    Options +FollowSymLinks
+    Options +SymLinksIfOwnerMatch
     RewriteEngine on
 
 ############################################
@@ -231,3 +231,14 @@ ErrorDocument 403 /errors/404.php
     ## Prevent clickjacking
     Header set X-Frame-Options SAMEORIGIN
 </IfModule>
+
+# SP BEGIN php handler
+<IfModule mod_fcgid.c>
+          AddHandler fcgid-script .php .php5 .php7 .phtml
+          FcgidWrapper    /usr/local/cpanel/cgi-sys/sp-ea-php74 .php
+          FcgidWrapper    /usr/local/cpanel/cgi-sys/sp-ea-php74 .php5
+          FcgidWrapper    /usr/local/cpanel/cgi-sys/sp-ea-php74 .php7
+          FcgidWrapper    /usr/local/cpanel/cgi-sys/sp-ea-php74 .phtml
+</IfModule>
+# SP END php handler
+

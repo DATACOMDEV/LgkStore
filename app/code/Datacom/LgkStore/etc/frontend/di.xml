@@ -2,6 +2,12 @@
     <type name="Magento\Customer\Controller\Account\LoginPost">
         <plugin name="dtm-lgkstore-loginpost-plugin" type="Datacom\LgkStore\Plugin\Customer\Controller\Account\LoginPost" sortOrder="1" />
     </type>
+    <type name="Magento\Quote\Model\Quote">
+        <plugin name="dtm-lgkstore-quotemodel-plugin" type="Datacom\LgkStore\Plugin\Quote\Model\Quote" sortOrder="1" />
+    </type>
+    <type name="Magento\Quote\Model\Quote\Validator\MinimumOrderAmount\ValidationMessage">
+        <plugin name="dtm-lgkstore-quotemodelvalidationmessage-plugin" type="Datacom\LgkStore\Plugin\Quote\Model\QuoteValidator\MinimumOrderAmount\ValidationMessage" sortOrder="1" />
+    </type>
     <type name="Magento\Customer\CustomerData\SectionPoolInterface">
         <arguments>
             <argument name="sectionSourceMap" xsi:type="array">

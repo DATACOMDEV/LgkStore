@@ -1,0 +1,61 @@
+<?php
+    /* @var $block \Datacom\LgkStore\Block\Pricelistsbackend\Index */
+?>
+<?php
+    $manufacturers = $block->getManufacturers();
+?>
+<form id="export-pricelist" class="form" method="get" action="<?= $block->getUrl('lgkstore/pricelistsbackend/export'); ?>">
+    <div class="admin__data-grid-filters-wrap _show">
+        <fieldset class="admin__fieldset admin__data-grid-filters">
+            <div class="admin__form-field">
+                <label class="admin__form-field-label" for="manufacturer_id">
+                    <span>Marchio da esportare</span>
+                </label>
+                <div class="admin__form-field-control">
+                    <select class="admin__control-select" 
+                        name="manufacturer_id" 
+                        id="manufacturer_id" 
+                        aria-describedby="notice-manufacturer_id">
+                            <?php foreach ($manufacturers as $m): ?>
+                                <?php $title = empty(trim($m['label'])) ? 'Tutti i marchi' : $m['label']; ?>
+                                <option data-title="<?= $block->escapeHtmlAttr($title) ?>" value="<?= $block->escapeHtmlAttr($m['value']) ?>"><?= $block->escapeHtml($title) ?></option>
+                            <?php endforeach; ?>
+                    </select>
+                </div>
+            </div>
+            <div class="action-select-wrap" style="margin-top: 19px;">
+                <button class="action-primary" type="submit" data-action="grid-filter-apply">
+                    <span>Esporta catalogo</span>
+                </button>
+            </div>
+        </fieldset>
+    </div>
+</form>
+<form id="export-pricelist" class="form" method="post" enctype="multipart/form-data" action="<?= $block->getUrl('lgkstore/pricelistsbackend/import'); ?>">
+    <input name="form_key" type="hidden" value="<?= /* @escapeNotVerified */ $block->getFormKey() ?>" />
+    <div class="admin__data-grid-filters-wrap _show">
+        <fieldset class="admin__fieldset admin__data-grid-filters">
+            <div class="admin__form-field">
+                <label class="admin__form-field-label" for="manufacturer_id">
+                    <span>File listino da importare</span>
+                </label>
+                <div class="admin__form-field-control">
+                    <input id="price_list" 
+                    name="price_list" 
+                    data-ui-id="import-form-container-form-fieldset-element-file-import-file" 
+                    value="" 
+                    title="Selezionare il File da importare" 
+                    class="input-file required-entry _required" 
+                    type="file" 
+                    aria-required="true"
+                    accept=".csv">
+                </div>
+            </div>
+            <div class="action-select-wrap" style="margin-top: 19px;">
+                <button class="action-primary" type="submit" data-action="grid-filter-apply">
+                    <span>Importa catalogo</span>
+                </button>
+            </div>
+        </fieldset>
+    </div>
+</form>

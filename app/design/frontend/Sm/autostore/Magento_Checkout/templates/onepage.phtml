@@ -44,22 +44,37 @@ $_dtmDataHelper = $this->helper(\Datacom\LgkStore\Helper\Data::class);
         require(
             [
                 'jquery',
+                'Magento_Checkout/js/action/select-shipping-method',
                 '!domReady'
             ],
-            function($) {
+            function($, selectShippingMethodAction) {
                 var ceeAllowedCountries = <?= json_encode($_dtmDataHelper->getCeeCountryIds()); ?>;
 
-                var populatePrecompiledData = function(item) {
+                <?php $_loggedInCustomer = $_dtmCustomerHelper->getLoggedInCustomer(); ?>
+                <?php if ($_loggedInCustomer->getId()): ?>
                     var lgkCheckoutSettings = {
-                        isPivaRequired: <?= $_dtmCustomerHelper->isCustomerNeedPiva($_dtmCustomerHelper->getLoggedInCustomer()) ? 'true' : 'false'; ?>,
-                        isCfiscRequired: <?= $_dtmCustomerHelper->isCustomerNeedCfisc($_dtmCustomerHelper->getLoggedInCustomer()) ? 'true' : 'false'; ?>,
-                        cFiscDefaultValue: '<?= $_dtmCustomerHelper->getLoggedInCustomer()->getData('c_fiscale'); ?>',
-                        pIvaDefaultValue: '<?= $_dtmCustomerHelper->getLoggedInCustomer()->getData('partita_iva_obbligatoria'); ?>',
-                        telephoneDefaultValue: '<?= $_dtmCustomerHelper->getLoggedInCustomer()->getData('telefono'); ?>',
-                        adressesCount: <?= count($_dtmCustomerHelper->getLoggedInCustomer()->getAddresses()); ?>,
-                        companyDefaultValue: '<?= $_dtmCustomerHelper->getLoggedInCustomer()->getData('azienda'); ?>'
+                        isPivaRequired: <?= $_dtmCustomerHelper->isCustomerNeedPiva($_loggedInCustomer) ? 'true' : 'false'; ?>,
+                        isCfiscRequired: <?= $_dtmCustomerHelper->isCustomerNeedCfisc($_loggedInCustomer) ? 'true' : 'false'; ?>,
+                        isSdiRequired: <?= $_dtmCustomerHelper->isCustomerNeedSdi($_loggedInCustomer) ? 'true' : 'false' ?>,
+                        cFiscDefaultValue: '<?= $_loggedInCustomer->getData('c_fiscale'); ?>',
+                        pIvaDefaultValue: '<?= $_loggedInCustomer->getData('taxvat'); ?>',
+                        sdiDefaultValue: '<?= $_loggedInCustomer->getData('codice_sdi_pec'); ?>',
+                        telephoneDefaultValue: '<?= $_loggedInCustomer->getData('telefono'); ?>',
+                        adressesCount: <?= count($_loggedInCustomer->getAddresses()); ?>,
+                        companyDefaultValue: '<?= $_loggedInCustomer->getData('azienda'); ?>'
                     };
+                <?php else: ?>
+                    var lgkCheckoutSettings = {
+                        cFiscDefaultValue: '',
+                        pIvaDefaultValue: '',
+                        sdiDefaultValue: '',
+                        telephoneDefaultValue: null,
+                        companyDefaultValue: null,
+                        adressesCount: 0
+                    };
+                <?php endif; ?>
 
+                var populatePrecompiledData = function(item, isShipping) {
                     var e = jQuery.Event( 'keydown', { which: $.ui.keyCode.ENTER } );
                     
                     var target = $(item);
@@ -68,46 +83,110 @@ $_dtmDataHelper = $this->helper(\Datacom\LgkStore\Helper\Data::class);
                     var phoneField = target.find('[name="telephone"]');
                     var companyField = target.find('[name="company"]');
                     var countryField = target.find('select[name="country_id"]');
+                    var sdiField = target.find('[name="custom_attributes[codice_sdi_pec]"]');
 
                     var newPivaValue = '';
                     var newCfiscValue = '/';
+                    var newSdiValue = '/';
 
-                    if (pivaField.length == 0 || cfiscField.length == 0 || phoneField.length == 0) {
+                    if (pivaField.length == 0 || cfiscField.length == 0 || phoneField.length == 0 || sdiField.length == 0) {
                         return false;
+                    }
+
+                    <?php if (!$_loggedInCustomer->getId()): ?>
+                        lgkCheckoutSettings.isPivaRequired = companyField.val() ? true : false;
+                        lgkCheckoutSettings.isCfiscRequired = (!companyField.val() && countryField.val() == 'IT') ? true : false;
+                        lgkCheckoutSettings.isSdiRequired = (companyField.val() && countryField.val() == 'IT') ? true : false;
+                    <?php endif; ?>
+
+                    var sectionName = 'billingAddress';
+                    if (target.attr('id') == 'shipping-new-address-form') {
+                        sectionName = 'shippingAddress';
                     }
 
                     if (lgkCheckoutSettings.isPivaRequired) {
                         newPivaValue = lgkCheckoutSettings.pIvaDefaultValue;
-                        target.find('[name="shippingAddress.vat_id"]').show();
+                        target.find('[name="' + sectionName + '.vat_id"]').show();
                     } else {
-                        target.find('[name="shippingAddress.vat_id"]').hide();
+                        newPivaValue = '/';
+                        target.find('[name="' + sectionName + '.vat_id"]').hide();
                     }
 
                     if (lgkCheckoutSettings.isCfiscRequired) {
                         newCfiscValue = lgkCheckoutSettings.cFiscDefaultValue;
-                        target.find('[name="shippingAddress.custom_attributes.c_fiscale"]').show();
+                        target.find('[name="' + sectionName + '.custom_attributes.c_fiscale"]').show();
                     } else {
-                        target.find('[name="shippingAddress.custom_attributes.c_fiscale"]').hide();
+                        target.find('[name="' + sectionName + '.custom_attributes.c_fiscale"]').hide();
                     }
 
-                    if (!pivaField.val()) {
-                        pivaField.attr('value', newPivaValue);
-                        pivaField.trigger('keyup');
-                    }
-                    
-                    if (!cfiscField.val()) {
-                        cfiscField.attr('value', newCfiscValue);
-                        cfiscField.trigger('keyup');
+                    if (lgkCheckoutSettings.isSdiRequired) {
+                        newSdiValue = lgkCheckoutSettings.sdiDefaultValue;
+                        target.find('[name="' + sectionName + '.custom_attributes.codice_sdi_pec"]').show();
+                    } else {
+                        target.find('[name="' + sectionName + '.custom_attributes.codice_sdi_pec"]').hide();
                     }
 
-                    if (!phoneField.val()) {
+                    <?php if ($_loggedInCustomer->getId()): ?>
+                        if (!pivaField.val()) {
+                            pivaField.attr('value', newPivaValue);
+                            pivaField.trigger('change');
+                        }
+
+                        if (!cfiscField.val()) {
+                            cfiscField.attr('value', newCfiscValue);
+                            cfiscField.trigger('change');
+                        }
+                        
+                        if (!sdiField.val()) {
+                            sdiField.attr('value', newSdiValue);
+                            sdiField.trigger('change');
+                        }
+                    <?php else: ?>
+                        if (lgkCheckoutSettings.isPivaRequired && pivaField.val() == '/') {
+                            pivaField.val('');
+                            pivaField.attr('value', '');
+                            pivaField.trigger('change');
+                        }
+                        
+                        if (!lgkCheckoutSettings.isPivaRequired) {
+                            pivaField.val(newPivaValue);
+                            pivaField.attr('value', newPivaValue);
+                            pivaField.trigger('change');
+                        }
+                        
+                        if (lgkCheckoutSettings.isCfiscRequired && cfiscField.val() == '/') {
+                            cfiscField.val('');
+                            cfiscField.attr('value', '');
+                            cfiscField.trigger('change');
+                        }
+
+                        if (!lgkCheckoutSettings.isCfiscRequired) {
+                            cfiscField.val(newCfiscValue);
+                            cfiscField.attr('value', newCfiscValue);
+                            cfiscField.trigger('change');
+                        }
+
+                        if (lgkCheckoutSettings.isSdiRequired && sdiField.val() == '/') {
+                            sdiField.val('');
+                            sdiField.attr('value', '');
+                            sdiField.trigger('change');
+                        }
+
+                        if (!lgkCheckoutSettings.isSdiRequired) {
+                            sdiField.val(newSdiValue);
+                            sdiField.attr('value', newSdiValue);
+                            sdiField.trigger('change');
+                        }
+                    <?php endif; ?>
+
+                    if (!phoneField.val() && lgkCheckoutSettings.telephoneDefaultValue !== null) {
                         phoneField.attr('value', lgkCheckoutSettings.telephoneDefaultValue);
-                        phoneField.trigger('keyup');
+                        phoneField.trigger('change');
                     }
 
-                    if (!companyField.val()) {
+                    if (!companyField.val() && lgkCheckoutSettings.companyDefaultValue !== null) {
                         companyField.attr('value', lgkCheckoutSettings.companyDefaultValue);
-                        companyField.trigger('keyup');
+                        companyField.trigger('change');
                     }
 
                     <?php
@@ -141,34 +220,69 @@ $_dtmDataHelper = $this->helper(\Datacom\LgkStore\Helper\Data::class);
                         }
                     ?>
 
-                    countryField.trigger('change');
+                    if (isShipping) {
+                        countryField.trigger('change');
+                    }
 
                     return true;
                 };
 
-                var done = false;
-
                 var config44 = { attributes: true, childList: true, characterData: true, subtree: true };
                 var target33 = $('#checkout').get(0);
-                var doneMutation = false;
+                var doneShipping = false;
+                var doneBilling = false;
                 var observer = new MutationObserver(function(mutations) {
-                    if (doneMutation) return;
                     mutations.forEach(function(mutation) {
+                        if (doneShipping && doneBilling) return;
                         for (const node of mutation.addedNodes) {
                             if (!node.tagName) continue;
-                            if (!node.id) continue;
-                            if (node.id != 'co-shipping-form') continue;
-                            console.log('ok');
-                            $('#co-shipping-form #shipping-new-address-form').each(function(index) {
-                                if (done) {
-                                    return;
-                                }
+                            if (!node.id && node.classList.length == 0) continue;
+                            
+                            //console.log(node.classList);
+                            var targetQuery = '';                            
+                            if (node.id == 'co-shipping-form') {
+                                targetQuery = '#shipping-new-address-form';
+                            }
+                            if (node.classList.contains('billing-address-form')) {
+                                targetQuery = 'form > fieldset';
+                            }
+                            if (targetQuery == '') continue;
 
+                            $(node).find(targetQuery).each(function(index) {
                                 var item = this;
 
                                 var startPopulateData = function() {
-                                    if (populatePrecompiledData(item)) {
-                                        done = true;
+                                    let isShipping = $(item).closest('#co-shipping-form').length > 0;
+                                    if (populatePrecompiledData(item, isShipping)) {
+                                        <?php if (!$_loggedInCustomer->getId()): ?>
+                                            $(node).find('input[name="vat_id"]').on('change.lgkcustom', function() {
+                                                var selectedShippingMethod = $('#checkout-shipping-method-load input[type="radio"]:checked');
+                                                if (selectedShippingMethod.length == 0) {
+                                                    selectShippingMethodAction(window.checkoutConfig.shippingMethods[0]);
+                                                    return;
+                                                }
+                                                selectShippingMethodAction(null);
+                                                window.checkoutConfig.shippingMethods.some(function(item) {
+                                                    var methodId = item.carrier_code + '_' + item.method_code;
+                                                    if (methodId != selectedShippingMethod.attr('value')) return false;
+                                                    selectShippingMethodAction(item);
+                                                    return true;
+                                                });
+                                            });
+                                            $(node).find('select[name="country_id"]').on('change.lgkcustom', function() {
+                                                $(this).off('change.lgkcustom');
+                                                startPopulateData();
+                                            });
+                                            $(node).find('input[name="company"]').on('change.lgkcustom', function() {
+                                                $(this).off('change.lgkcustom');
+                                                startPopulateData();
+                                            });
+                                        <?php endif; ?>
+                                        if (isShipping) {
+                                            doneShipping = true;
+                                        } else {
+                                            doneBilling = true;
+                                        }
                                     } else {
                                         setTimeout(function() {
                                             startPopulateData();
@@ -178,33 +292,12 @@ $_dtmDataHelper = $this->helper(\Datacom\LgkStore\Helper\Data::class);
 
                                 startPopulateData();
                             });
-                            doneMutation = true;
                             break;
                             //observer.disconnect();
                         }
                     });
                 });
                 observer.observe(target33, config44);
-
-                /*$(document).on('DOMSubtreeModified', '#co-shipping-form #shipping-new-address-form', function() {
-                    if (done) {
-                        return;
-                    }
-
-                    var item = this;
-
-                    var startPopulateData = function() {
-                        if (populatePrecompiledData(item)) {
-                            done = true;
-                        } else {
-                            setTimeout(function() {
-                                startPopulateData();
-                            }, 500);
-                        }
-                    };
-
-                    startPopulateData();
-                });*/
             }
         );
     </script>

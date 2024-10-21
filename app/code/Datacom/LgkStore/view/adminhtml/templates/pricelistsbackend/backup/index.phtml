@@ -1,0 +1,68 @@
+<?php
+    /* @var $block \Datacom\LgkStore\Block\BackupListing\Index */
+?>
+<?php $_availableDates = $block->getAvailableDates(); ?>
+<?php $_backupDate = $block->getBackupDate(); ?>
+<?php if (empty($_availableDates)): ?>
+    <p>Non ci sono backup disponibili</p>
+<?php else: ?>
+    <form action="<?= $block->getUrl('lgkstore/pricelistsbackend/backuplisting'); ?>" method="get">
+        <input name="form_key" type="hidden" value="<?= /* @escapeNotVerified */ $block->getFormKey() ?>" />
+        <div class="admin__data-grid-filters-wrap _show">
+            <fieldset class="admin__fieldset admin__data-grid-filters">
+                <div class="admin__form-field">
+                    <label class="admin__form-field-label" for="backup_date">
+                        <span>Data backup</span>
+                    </label>
+                    <div class="admin__form-field-control">
+                        <select class="admin__control-select" 
+                            name="backup_date" 
+                            id="backup_date" 
+                            aria-describedby="notice-manufacturer_id">
+                            <?php foreach ($_availableDates as $date): ?>
+                                <?php $_dateText = sprintf('%s-%s-%s', substr($date, 0, 4), substr($date, 4, 2), substr($date, 6, 2)); ?>
+                                <option value="<?= $block->escapeHtmlAttr($date) ?>" <?= $date == $_backupDate ? 'selected' : '' ?>><?= $block->escapeHtmlAttr(sprintf('Backup del giorno %s', $_dateText)) ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="action-select-wrap" style="margin-top: 19px;">
+                    <button class="action-primary" type="submit" data-action="grid-filter-apply">
+                        <span>Visualizza backup</span>
+                    </button>
+                </div>
+            </fieldset>
+        </div>
+    </form>
+    <?php if ($_backupDate): ?>
+        <?php $_availableTimes = $block->getAvailableTimes($_backupDate); ?>
+        <h2><?= $block->escapeHtml(sprintf('Backup del giorno %s', sprintf('%s-%s-%s', substr($_backupDate, 0, 4), substr($_backupDate, 4, 2), substr($_backupDate, 6, 2)))) ?></h2>
+        <?php if (empty($_availableTimes)): ?>
+            <p>Non ci sono backup per questo giorno</p>
+        <?php else: ?>
+            <div>
+                <table class="data-grid">
+                    <thead>
+                        <tr>
+                            <th class="data-grid-th">Orario</th>
+                            <th class="data-grid-th">Nome file</th>
+                            <th class="data-grid-th">Scarica</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($_availableTimes as $time => $files): ?>
+                            <?php $_timeText = trim(chunk_split($time, 2, ':'), ':'); ?>
+                            <?php foreach ($files as $file): ?>
+                                <tr>
+                                    <td><?= $block->escapeHtml(sprintf('Backup delle ore %s', $_timeText)) ?></td>
+                                    <td><?= $block->escapeHtml($file) ?></td>
+                                    <td><a href="<?= $block->getUrl('lgkstore/pricelistsbackend/backupdownload', ['requested_datetime' => sprintf('%s%s', $_backupDate, $time)]); ?>">Download</a></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        <?php endif; ?>
+    <?php endif; ?>
+<?php endif; ?>

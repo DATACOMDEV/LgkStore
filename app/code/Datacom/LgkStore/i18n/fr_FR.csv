@@ -78,3 +78,9 @@ Hi,Bonjour
 "Select Option ...","Sélectionner des options"
 "This is a required field","Ce champ est obligatoire"
 "This is a required field.","Ce champ est obligatoire."
+"Already have an account? Click here to login","Vous avez déjà un compte ?"
+"You already have an account with us.","Vous avez déjà un compte avec nous."
+"or continue as guest.","ou continuer en tant qu'invité."
+"Sorry, no quotes are available for this order at this time","Désolé, il n'y a actuellement aucun devis disponible pour cette commande",module,Magetop_Osc
+"Sorry, no quotes are available for this order at this time","Désolé, il n'y a actuellement aucun devis disponible pour cette commande",module,Magento_Checkout
+"Sorry, no quotes are available for this order at this time","Désolé, il n'y a actuellement aucun devis disponible pour cette commande",module,Magento_NegotiableQuote

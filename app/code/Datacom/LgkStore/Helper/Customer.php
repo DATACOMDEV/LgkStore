@@ -37,4 +37,11 @@ class Customer extends \Magento\Framework\App\Helper\AbstractHelper {
             \Datacom\LgkStore\Model\Constants::GROUP_ID_PRIVATO_ITALIA
         ]);
     }
+
+    public function isCustomerNeedSdi($customer) {
+        return in_array($customer->getGroupId(), [
+            \Datacom\LgkStore\Model\Constants::GROUP_ID_AZIENDA_ITALIANA,
+            \Datacom\LgkStore\Model\Constants::GROUP_ID_RIVENDITORE_ITALIA
+        ]);
+    }
 }

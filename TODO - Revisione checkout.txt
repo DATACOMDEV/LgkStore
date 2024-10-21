@@ -1,0 +1,59 @@
+Partita iva funzionante tedesca (era Sven Haier:) DE355610053
+
+customer_eav_attribute, is_used_in_grid 0 per: 11 (dob), 20 (gender), 28 (street), 29 (city), 31 (region), 33 (postcode), 34 (telephone), 35 (fax), 173 (fax), 191 (???), 192 (???), 242 (mpsoc_field_2)
+    da guardare se fattibile solo su db oppure anche da backoffice
+    242 (mpsoc_field_2) dovrebbe essere fattibile solo dopo aver provato ad installare il modulo
+
+
+Scarica modulo Magetop e carica 2.3, setup:upgrade
+
+Negozi -> Configurazione -> Magetop -> One Step Checkout Settings -> Visualizza ordine commento: No
+
+Negozi -> Controllo di un passo -> Manage fields: riporta tutto come è
+
+
+shell:
+composer remove magecomp/magento-2-custom-shipping
+composer require swissup/module-marketplace 1.10.0
+composer require magecomp/magento-2-custom-shipping --ignore-platform-reqs
+php bin/magento setup:upgrade --safe-mode=1
+php bin/magento marketplace:channel:enable swissuplabs
+
+Su Swisslab attivare il dominio che viene indicato e riprovare
+
+php bin/magento marketplace:channel:enable swissuplabs
+
+Copia/incollando l'identity key.
+
+composer remove magecomp/magento-2-custom-shipping
+php bin/magento marketplace:package:require swissup/product-taxvat
+composer require magecomp/magento-2-custom-shipping --ignore-platform-reqs
+
+upgrade, compile, file statici....
+
+Backoffice -> Negozi -> Configurazione -> Swissup -> Checkout -> Tax VAT -> Generale:
+
+Convalida iva -> Validate....: si
+Consentire di effettuare l'ordine....: si
+
+Acquisti esenti da imposte -> Rimuovi imposta se il numero di iva è valido: si
+When tax is removed apply discount on prices: Escluse tasse
+Consenti acquisti esenti da imposte per tutti i paesi dell'UE: no
+Nazioni CEE, tranne Italia
+
+Attributi cliente c_fiscale e fax: Show on the Shipping page: No
+
+++++++++++ NON FARE: Riporta config.ni aliquote e tax zones e rates
+
+Riporta config negozi -> magetop -> one step checkout Settings eng, ita ecc...
+
+Ricrea blocchi dtm_checkout_login_link
+
+TODO: azienda cee, senza login, su pagina checkout l'importo della spedizione andrebbe mostrato iva esclsua. Ma in realtà poi sotto ci sono i dettagli iva, importa davvero?
+TODO: privati cee e azienda cee, da mostrare i totali iva incl e iva escl?
+
+xTODO: riattivare creazione account da modulo checkout
+    -> se crei account da checkout? come si gestiscono tutti i campi customizzati?
+xTODO: loggato, privato, nascondiamo azienda?
+xTODO: aggiungi indirizzo su checkout, scompare "New Address"
+xTODO: sezione "rubrica" dell'account, andrebbe rivisto cosa è visibile e cosa no dipendentemente dal gruppo utente

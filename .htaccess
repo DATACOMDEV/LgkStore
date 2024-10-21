@@ -150,6 +150,40 @@
     #RewriteBase /magento/
 
 ############################################
+## DATACOM - custom rewrites
+
+	RewriteRule ^it/prodotti/motori-e-ricambi/motori-e-ricambi-iame/motore-mini-gr3-e-ricambi$ /it/prodotti/motori-e-ricambi/motori-e-ricambi-iame? [L,R=301]
+	RewriteRule ^it/prodotti/motori-e-ricambi/motori-e-ricambi-iame/motore-mini-gr3-e-ricambi/(.*)$ /it/prodotti/motori-e-ricambi/motori-e-ricambi-iame? [L,R=301]
+
+    #RewriteRule ^it/prodotti/abbigliamento/abbigliamento-imaf$ /it/prodotti/abbigliamento? [L,R=301]
+	#RewriteRule ^it/prodotti/abbigliamento/abbigliamento-imaf/(.*)$ /it/prodotti/abbigliamento? [L,R=301]
+    #RewriteRule ^en/products/clothing/imaf-clothing$ /en/products/clothing? [L,R=301]
+	#RewriteRule ^en/products/clothing/imaf-clothing/(.*)$ /en/products/clothing? [L,R=301]
+    #RewriteRule ^fr/produits/vetements/vetements-imaf$ /fr/produits/vetements? [L,R=301]
+	#RewriteRule ^fr/produits/vetements/vetements-imaf/(.*)$ /fr/produits/vetements? [L,R=301]
+
+    #RewriteRule ^it/prodotti/abbigliamento/abbigliamento-lgk-kart-go$ /it/prodotti/abbigliamento? [L,R=301]
+	#RewriteRule ^it/prodotti/abbigliamento/abbigliamento-lgk-kart-go/(.*)$ /it/prodotti/abbigliamento? [L,R=301]
+    #RewriteRule ^en/products/clothing/lgk-kart-go-clothing$ /en/products/clothing? [L,R=301]
+	#RewriteRule ^en/products/clothing/lgk-kart-go-clothing/(.*)$ /en/products/clothing? [L,R=301]
+    #RewriteRule ^fr/produits/vetements/vetements-lgk-kart-go$ /fr/produits/vetements? [L,R=301]
+	#RewriteRule ^fr/produits/vetements/vetements-lgk-kart-go/(.*)$ /fr/produits/vetements? [L,R=301]
+
+    #RewriteRule ^it/prodotti/abbigliamento/abbigliamento-omp$ /it/prodotti/abbigliamento? [L,R=301]
+	#RewriteRule ^it/prodotti/abbigliamento/abbigliamento-omp/(.*)$ /it/prodotti/abbigliamento? [L,R=301]
+    #RewriteRule ^en/products/clothing/omp-clothing$ /en/products/clothing? [L,R=301]
+	#RewriteRule ^en/products/clothing/omp-clothing/(.*)$ /en/products/clothing? [L,R=301]
+    #RewriteRule ^fr/produits/vetements/vetements-omp$ /fr/produits/vetements? [L,R=301]
+	#RewriteRule ^fr/produits/vetements/vetements-omp/(.*)$ /fr/produits/vetements? [L,R=301]
+
+    #RewriteRule ^it/prodotti/abbigliamento/protezioni-torace-jecko$ /it/prodotti/abbigliamento? [L,R=301]
+	#RewriteRule ^it/prodotti/abbigliamento/protezioni-torace-jecko/(.*)$ /it/prodotti/abbigliamento? [L,R=301]
+    #RewriteRule ^en/products/clothing/jecko-rib-protectors$ /en/products/clothing? [L,R=301]
+	#RewriteRule ^en/products/clothing/jecko-rib-protectors/(.*)$ /en/products/clothing? [L,R=301]
+    #RewriteRule ^fr/produits/vetements/protege-cote-jecko$ /fr/produits/vetements? [L,R=301]
+	#RewriteRule ^fr/produits/vetements/protege-cote-jecko/(.*)$ /fr/produits/vetements? [L,R=301]
+
+############################################
 ## workaround for HTTP authorization
 ## in CGI environment
 

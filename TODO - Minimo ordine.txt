@@ -1,0 +1,2 @@
+Creare dtm_customer_minimum_order_amount da modulo attributi cliente Amasty
+

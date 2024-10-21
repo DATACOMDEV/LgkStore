@@ -1,6 +1,30 @@
 <?php
-$_dtmHelper = $this->helper('Datacom\LgkStore\Helper\Data');
+  $_dtmHelper = $this->helper('Datacom\LgkStore\Helper\Data');
+  $_i18n = [];
+  if ($_dtmHelper->getStoreId() == 20) {  //ITA
+    $_i18n['Sorry, no quotes are available for this order at this time'] = 'Siamo spiacenti, al momento non ci sono metodi disponibili per questo ordine';
+    $_i18n['New Address'] = 'Nuovo Indirizzo';
+  }
+  if ($_dtmHelper->getStoreId() == 2) {  //FRA
+    $_i18n['New Address'] = 'Nouvelle Adresse';
+  }
+  if ($_dtmHelper->getStoreId() == 21) {  //DEU
+    $_i18n['New Address'] = 'Neue Adresse';
+  }
 ?>
+<?php if (!empty($_i18n)): ?>
+  <script>
+      require(
+      [
+        'jquery',
+        'mage/translate'
+      ],
+      function ($) {
+        $.mage.translate.add(<?php echo Zend_Json::encode($_i18n) ?>);
+      }
+    );
+  </script>
+<?php endif; ?>
 <meta name="facebook-domain-verification" content="t4jw4x60e3hc6crq5klrqrjdyf5x6l" /> 
 <link rel="preload" as="style" href="<?= $block->getViewFileUrl('fonts/Blank-Theme-Icons/Blank-Theme-Icons.woff2'); ?>">
 <!-- Global site tag (gtag.js) - Google Ads: 388797009 -->

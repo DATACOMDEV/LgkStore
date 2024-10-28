@@ -57,12 +57,13 @@ class PriceLists extends \Magento\Framework\App\Helper\AbstractHelper {
     }
 
     public function updateProductData($product, $prezzoDiAcquisto, $price, $specialPrice) {
+        $specialPriceToUse = $specialPrice ? $specialPrice : null;
         $this->_productAction->updateAttributes(
             [$product->getId()], 
             [
                 'prezzo_di_acquisto' => $prezzoDiAcquisto,
                 'price' => $price,
-                'special_price' => $specialPrice
+                'special_price' => $specialPriceToUse
             ],
             0
         );
